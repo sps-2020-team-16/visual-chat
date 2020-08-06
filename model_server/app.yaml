@@ -1,0 +1,4 @@
+runtime: python38
+service: flask
+
+entrypoint: gunicorn -b :8080 -w 1 main:app
