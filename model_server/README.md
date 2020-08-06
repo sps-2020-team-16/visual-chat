@@ -1,4 +1,8 @@
-# Temp test deployment: (https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/echo/)[https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/echo/]
+# Temp test deployment: 
+
+https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/echo/
+
+https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/
 
 # Deployment for app engine
 ```
