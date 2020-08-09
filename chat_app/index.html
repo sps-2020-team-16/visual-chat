@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Box</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">  
+</head>
+
+<body>
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container-fluid"> 
+      <div class="navbar-header">
+          <a class="navbar-brand" href="#">Visual Chat</a>
+      </div>
+      <div>
+          <ul class="nav navbar-nav">
+              <li class="active"><a href="#">David</a></li>
+              <li><a href="#">Logout</a></li>
+          </ul>
+      </div>
+    </div>
+  </nav>
+
+  <h2>Chat Box</h2>
+  <div id="avatar1">
+    <img class="avatar" src="imgs/3.jpg" alt="">
+    <span class="name">Cathy</span>
+  </div>
+  <div id="avatar2">
+    <img class="avatar" src="imgs/4.jpg" alt="">
+    <span class="name">Ron</span>
+  </div>
+  <div id="avatar3">
+    <img class="avatar" src="imgs/3.jpg" alt="">
+    <span class="name">Julia</span>
+  </div>
+  <div id="avatar4">
+    <img class="avatar" src="imgs/4.jpg" alt="">
+    <span class="name">David</span>
+  </div>
+  <div class="chat-container">
+    <ul class="chat">
+      <li class="message left">
+        <img class="logo" src="imgs/17.jpg" alt="">
+        <p>I'm hungry!</p>
+        <div class="name">
+          <p>Cathy</p>
+        </div>
+      </li>
+      <li class="message right">
+        <img class="logo" src="imgs/67.jpg" alt="">
+        <p>Hi hungry, nice to meet you. I'm Dad.</p>
+        <div class="name">
+          <p>David</p>
+        </div>
+      </li>
+      <li class="message left">
+        <img class="logo" src="imgs/17.jpg" alt="">
+        <p>DAD! I'm serious!</p>
+        <div class="name">
+          <p>Cathy</p>
+        </div>
+      </li>
+      <li class="message right">
+        <img class="logo" src="imgs/67.jpg" alt="">
+        <p>I thought your name was hungry...?</p>
+        <div class="name">
+          <p>David</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="col-lg-6">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Message...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">
+          Send
+        </button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+</body>
+
+</html>
