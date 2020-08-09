@@ -10,7 +10,7 @@ def doGet_echo():
 
 @app.route( '/{}/echo/'.format( pathName ) , methods=['POST'] )
 def doPost_echo():
-    return jsonify( json.loads( request.data ) )
+    return jsonify( request.json )
 
 @app.route( '/{}/rnn/'.format( pathName ) , methods=['GET'] )
 def doGet_rnn():
@@ -21,7 +21,7 @@ def doGet_rnn():
 
 @app.route( '/{}/rnn/'.format( pathName ) , methods=['POST'] )
 def doPost_rnn():
-    sentence = json.loads( request.data ).get('sentence','')
+    sentence = ( request.json ).get('sentence','')
     if( len(sentence) > 0 ):
         return str( predictOneSentence( sentence ) )
     return 'ok'

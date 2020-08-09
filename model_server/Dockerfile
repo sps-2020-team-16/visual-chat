@@ -25,7 +25,7 @@ RUN apt-get update -qq \
     python3-numpy \
     python3-scipy \
     # requirements for keras
-    python3-h5py \
+    # python3-h5py \
     python3-yaml \
     python3-pydot \
  && apt-get clean \
@@ -44,4 +44,8 @@ RUN python3 -c "import theano; print(theano.__version__)" \
  && dpkg-query -l > /dpkg-query-l.txt \
  && pip3 freeze > /pip3-freeze.txt
 
+RUN pip3 --no-cache-dir install pandas h5py flask gunicorn psutil
+
 WORKDIR /srv/
+
+RUN apt-get update && apt-get -y install curl
