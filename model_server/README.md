@@ -1,9 +1,6 @@
-# 1. Temp test deployment: 
+# 1. Test Sentiment Analysis Server
 
-## 1.1 slow Echo Server
-
-I'm trying to add a feature to classify sentences into emotions.
-So these servers are unstable.
+## 1.1 echo api
 
 https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/echo/
 
@@ -12,12 +9,16 @@ https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/echo/
 | GET | plain string 'hello world' |
 | POST | echo the json (please don't send content other than json) |
 
+## 1.2 RNN (Recurrent neural network) api
+
 https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/
 
 | methods |  |
 |--|--|
 | GET | e.g. curl https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/?s=Nice |
 | POST | e.g. curl https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/ -X POST -H 'Content-Type: application/json' -d '{"sentence":"This is too slow!"}' |
+
+### examples
 
 ```
 curl https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/?s=Nice
@@ -26,17 +27,9 @@ curl https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/?s=Nice
 ```
 
 ```
-curl https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/ -X POST -H 'Content-Type: application/json' -d '{"sentence":"This is too slow!"}'
-               Tweet Emotion
-0  This is too slow!     Joy
-```
-
-## 1.2 new Echo + Rnn Server
-
-I'm trying to make this quicker. The default 'runtime: python38' doesn't have g++, so theano:
-
-```
-WARNING (theano.configdefaults): g++ not detected ! Theano will be unable to execute optimized C-implementations (for both CPU and GPU) and will default to Python implementations. Performance will be severely degraded. To remove this warning, set Theano flags cxx to an empty string.
+curl https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/ -X POST -H 'Content-Type: application/json' -d '{"sentence":"This seems much faster!"}'
+                     Tweet Emotion
+0  This seems much faster!     Joy
 ```
 
 # 2. Deployment for app engine
@@ -55,5 +48,6 @@ cd visual-chat/model_server/
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-gunicorn -b :5000 -w 1 main:app
+pip install keras==1.1.0 theano==0.8.2
+gunicorn -b :5000 -w 1 main:app --timeout 600
 ```
