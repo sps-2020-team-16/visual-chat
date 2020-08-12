@@ -4,6 +4,10 @@ import json
 
 from twitteremotionrecognition import predictOneSentence
 
+@app.route( '/_ah/health' )
+def doGet_ah_health():
+    return 'ok'
+
 @app.route( '/{}/echo/'.format( pathName ) , methods=['GET'] )
 def doGet_echo():
     return 'hello world\n'

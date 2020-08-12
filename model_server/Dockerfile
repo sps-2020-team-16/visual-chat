@@ -1,46 +1,58 @@
-FROM gcr.io/google-appengine/python
+# docker-keras - Keras in Docker with Python 3 and Theano on CPU
 
-# Create a virtualenv for dependencies. This isolates these packages from
-# system-level packages.
-# Use -p python3 or -p python3.7 to select python version. Default is version 2.
-RUN virtualenv /env -p python3.7 
+FROM debian:stretch
+MAINTAINER gw0 [http://gw.tnode.com/] <gw.2018@ena.one>
 
-# Setting these environment variables are the same as running
-# source /env/bin/activate.
-ENV VIRTUAL_ENV /env
-ENV PATH /env/bin:$PATH
-
-
-
+# install debian packages
+ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -qq \
  && apt-get install --no-install-recommends -y \
     # install essentials
     build-essential \
     g++ \
-    git
+    git \
+    openssh-client \
+    # install python 3
+    python3 \
+    python3-dev \
+    python3-pip \
+    python3-setuptools \
+    python3-virtualenv \
+    python3-wheel \
+    pkg-config \
+    # requirements for numpy
+    libopenblas-base \
+    python3-numpy \
+    python3-scipy \
+    # requirements for keras
+    # python3-h5py \
+    python3-yaml \
+    python3-pydot \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
+ARG THEANO_VERSION=0.8.2
+ENV THEANO_FLAGS='device=cpu,floatX=float32'
+RUN pip3 --no-cache-dir install git+https://github.com/Theano/Theano.git@rel-${THEANO_VERSION}
 
+ARG KERAS_VERSION=1.1.0
+ENV KERAS_BACKEND=theano
+RUN pip3 --no-cache-dir install --no-dependencies git+https://github.com/fchollet/keras.git@${KERAS_VERSION}
 
-# Copy the application's requirements.txt and run pip to install all
-# dependencies into the virtualenv.
-ADD requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
+# quick test and dump package lists
+RUN python3 -c "import theano; print(theano.__version__)" \
+ && dpkg-query -l > /dpkg-query-l.txt \
+ && pip3 freeze > /pip3-freeze.txt
 
-# # Add the application source code.
-# ADD . /app
-
-# # Run a WSGI server to serve the application. gunicorn must be declared as
-# # a dependency in requirements.txt.
-# CMD gunicorn -b :$PORT main:app
-
-# ADD echoserver.py ./
-# CMD gunicorn -b :$PORT echoserver:app
+WORKDIR /srv/
 
 COPY main.py ./
 COPY application ./application
 COPY models ./models
 COPY twitteremotionrecognition ./twitteremotionrecognition
 
-ENV KERAS_BACKEND=theano
-# entrypoint: KERAS_BACKEND=theano gunicorn -b :8080 -w 1 main:app --timeout 600
+COPY requirements.txt ./
+RUN pip3 --no-cache-dir install -r ./requirements.txt
+
+ENV PORT=8080
 CMD gunicorn -b :$PORT -w 1 main:app --timeout 600
