@@ -1,8 +1,14 @@
-runtime: python38 # or python37 for Python 3.7
-
-instance_class: F2
-
+runtime: custom
+env: flex
 service: flask
 
-entrypoint: KERAS_BACKEND=theano gunicorn -b :8080 -w 1 main:app --timeout 600
-# entrypoint: KERAS_BACKEND=theano FLASK_APP=main.py flask run
+
+
+# runtime: python38 # or python37 for Python 3.7
+
+# instance_class: F2
+
+# service: flask
+
+# entrypoint: KERAS_BACKEND=theano gunicorn -b :8080 -w 1 main:app --timeout 600
+# # entrypoint: KERAS_BACKEND=theano FLASK_APP=main.py flask run
