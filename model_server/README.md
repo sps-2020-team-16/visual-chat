@@ -15,16 +15,10 @@ https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/
 
 | methods |  |
 |--|--|
-| GET | e.g. curl https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/?s=Nice |
+| GET | a html page for testing RNN api |
 | POST | e.g. curl https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/ -X POST -H 'Content-Type: application/json' -d '{"sentence":"This is too slow!"}' |
 
 ### examples
-
-```
-curl https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/?s=Nice
-  Tweet   Emotion
-0  Nice  Surprise
-```
 
 ```
 curl https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/ -X POST -H 'Content-Type: application/json' -d '{"sentence":"This seems much faster!"}'
