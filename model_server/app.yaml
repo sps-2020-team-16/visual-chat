@@ -2,8 +2,17 @@ runtime: custom
 env: flex
 service: flask
 
+###############################
+##### manual_scaling will keep this instance running
+###############################
 manual_scaling:
   instances: 1
+###############################
+
+
+# inbound_services:
+# - warmup
+
 resources:
   cpu: 1
   memory_gb: 0.5
