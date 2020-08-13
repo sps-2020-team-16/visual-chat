@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Emotion Classification</title>
+
+    <script>
+        const apiUrlOfEmotionClassification = '{{ pathOfEmotionClassification }}'
+        const submitMsgForEmotionClassification = () => {
+            fetch(apiUrlOfEmotionClassification, {
+
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 'sentence': document.getElementById('classification-input').value })
+
+            }).then(
+                (response) => {
+
+                    let container = document.getElementById('classification-result-container');
+                    container.innerHTML = '';
+
+                    response.text().then(
+                        (resText) => {
+                            let strResult = document.createElement('p');
+                            strResult.innerText = resText;
+
+                            container.appendChild(strResult);
+                        }
+                    )
+
+                }
+            );
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <div style="width: 100%; text-align: center;">
+
+        <h1>Test Emotion Classification</h1>
+
+        <textarea id='classification-input' style="width: 60%;">It's a good day today</textarea>
+        <br />
+        <button onclick="submitMsgForEmotionClassification()">Submit</button>
+        <br />
+        <div id='classification-result-container'></div>
+
+    </div>
+
+</body>
+
+</html>

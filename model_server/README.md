@@ -9,7 +9,7 @@ https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/echo/
 | GET | plain string 'hello world' |
 | POST | echo the json (please don't send content other than json) |
 
-## 1.2 RNN (Recurrent neural network) api
+## 1.2 RNN (Recurrent Neural Network) api
 
 https://flask-dot-rqian-sps-summer20.df.r.appspot.com/saapi/rnn/
 
