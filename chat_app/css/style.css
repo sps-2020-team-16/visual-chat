@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background:	#FFEBCD;
+	background-size: cover;
+	background-position: center	center;
+	
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	min-height: 100vh;
+	font-family: 'Lato', sans-serif;
+	margin: 0 0 0;
+}
+
+.navbar.navbar-default.navbar-static-top {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+}
+
+h2 {
+	color: 	#6495ED;/*#fff;*/
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+#avatar1 {
+	border-radius: 5%;
+	box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.7);
+	overflow: hidden;
+	position:absolute;
+    top:50%;
+    right:80%;
+	width: 120px;
+	height: 220px;
+}
+
+#avatar2 {
+	border-radius: 5%;
+	box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.7);
+	overflow: hidden;
+	position:absolute;
+    top:25%;
+    right:70%;
+	width: 120px;
+	height: 220px;
+}
+
+#avatar3 {
+	border-radius: 5%;
+	box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.7);
+	overflow: hidden;
+	position:absolute;
+    top:25%;
+    left:70%;
+	width: 120px;
+	height: 220px;
+}
+
+#avatar4 {
+	border-radius: 5%;
+	box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.7);
+	overflow: hidden;
+	position:absolute;
+    top:50%;
+    left:80%;
+	width: 120px;
+	height: 220px;
+}
+
+span.name {
+	border-radius: 5%;
+	position: absolute;
+	left: 40px;
+	top:200px;
+}
+
+.avatar {
+	padding: 2px 2px 2px 2px;
+	width: 120px;
+	height: 200px;
+}
+
+.chat-container {
+	background-color:	#FDF5E6;
+	border-radius: 25px;
+	box-shadow: 0px 0px 5px 2px #6495ED;
+	overflow: hidden;
+	padding: 15px;
+	position: relative;
+	width: 560px;
+	max-width: 100%;
+	margin-bottom:100px;
+}
+
+.chat {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	list-style-type: none;
+	padding: 0;
+	margin-bottom: 20px;
+}
+
+.message {
+	background-color: rgba(255, 255, 255, 0.9);
+	border-radius: 50px;
+	position: relative;
+	margin-bottom: 30px;
+}
+
+.message.left {
+	padding: 15px 20px 15px 70px;
+}
+
+.message.left div.name {
+	border-radius: 5%;
+	position: absolute;
+	left: 10px;
+	top: 50px;
+}
+
+.message.right {
+	align-self: flex-end;
+	padding: 15px 70px 15px 20px;
+}
+
+.message.right div.name {
+	border-radius: 5%;
+	position: absolute;
+	right: 10px;
+	top: 50px;
+}
+
+.logo {
+	border-radius: 50%;
+	box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.7);
+	-o-object-fit: cover;
+	   object-fit: cover;
+	position: absolute;
+	left: 10px;
+	top: -10px;
+	width: 50px;
+	height: 50px;
+}
+
+.message.right .logo {
+	left: auto;
+	right: 10px;
+}
+
+.message p {
+	margin: 0;
+}
+
+.input-group {
+	border-style:double;
+	border-color:#6495ED;
+}
