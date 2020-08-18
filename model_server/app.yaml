@@ -1,0 +1,28 @@
+runtime: custom
+env: flex
+service: flask
+
+###############################
+##### manual_scaling will keep this instance running
+###############################
+manual_scaling:
+  instances: 1
+###############################
+
+
+# inbound_services:
+# - warmup
+
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+
+
+###################################################################################
+#####   The configs below are for the standard environment deployment
+###################################################################################
+# runtime: python38 # or python37 for Python 3.7
+# instance_class: F2
+# service: flask
+# entrypoint: KERAS_BACKEND=theano gunicorn -b :8080 -w 1 main:app --timeout 600
