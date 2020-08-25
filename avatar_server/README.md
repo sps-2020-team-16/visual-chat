@@ -63,6 +63,7 @@ Create a new instance of AVATAR class.
 Then render it in one div called 'avatar1'.
 
 ```
+
 const loadRemoteModel = () => {
 
     //////////////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +90,8 @@ const loadRemoteModel = () => {
         0,          // offset in y direction
         {
             "avatar": modelName,        // the name of the avatar 2D model
-            "gearandback": "false"      // if true the switching gear the background will appear
+            "gearandback": "false",     // if true the switching gear the background will appear
+            "buttons": "false"          // skip the render of buttons
         }           // additional arguments to be sent to the avatar service
     )
     window.avatarA.renderIn(window.document.getElementById('avatar1'))  // render the avatar in the div having the id of 'avatar1'
