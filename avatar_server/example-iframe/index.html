@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="background-color: lightgrey;">
+
+    <div id='avatar1'
+        style="position: absolute;left: 500px;top: 300px;width: 200px;height: 200px;background-color: aqua;"></div>
+
+    <p>Current avaliable model names: ['Haru', 'Hiyori', 'Mark', 'Natori', 'Rice']</p>
+    <button onclick="loadRemoteModel()">Load Model:</button>
+    <textarea id="model-input" rows="1">Mark</textarea>
+    <br />
+
+    <button onclick="getExpressionList()">Get Expression List</button>
+    <div id="expression-list"></div>
+
+    <button onclick="getMotionList()">Get Motion List</button>
+    <div id="motion-list"></div>
+
+    <button onclick="setExpression()">Set Expression:</button>
+    <textarea id="expression-input" rows="1"></textarea>
+
+    <button onclick="setMotion()">Set Motion:</button>
+    <textarea id="motion-input" rows="1"></textarea>
+
+    <script src="../CubismSdkForWeb-4-r.1/Samples/TypeScript/iframe/avatar.js"></script>
+    <script>
+
+        const loadRemoteModel = () => {
+            const modelName = String(window.document.getElementById('model-input').value)
+            console.log(modelName)
+            window.avatarA = new AVATAR(
+                // 'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/',
+                '../CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/',
+                500,
+                500,
+                1000,
+                500,
+                0,
+                0,
+                {
+                    "avatar": modelName,
+                    "gearandback": "false"
+                }
+            )
+            window.avatarA.renderIn(window.document.getElementById('avatar1'))
+        }
+
+        const getExpressionList = () => {
+            const expressList = window.avatarA.getExpressionList()
+            console.log(expressList)
+            let tmpStr = ''
+            for (let ele in expressList) {
+                tmpStr += String(expressList[ele]) + '\n'
+            }
+            window.document.getElementById('expression-list').innerText = tmpStr
+        }
+
+        const getMotionList = () => {
+            const motionList = window.avatarA.getMotionList()
+            console.log(motionList)
+            let tmpStr = ''
+            for (let ele in motionList) {
+                tmpStr += String(motionList[ele]) + '\n'
+            }
+            window.document.getElementById('motion-list').innerText = tmpStr
+        }
+
+        const setExpression = () => {
+            const expressionInput = String(window.document.getElementById('expression-input').value)
+            window.avatarA.setExpression(expressionInput)
+        }
+
+        const setMotion = () => {
+            const motionInput = String(window.document.getElementById('motion-input').value)
+            window.avatarA.setMotion(motionInput)
+        }
+
+    </script>
+
+</body>
+
+</html>
