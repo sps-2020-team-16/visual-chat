@@ -6,6 +6,22 @@ https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe
 
 https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/
 
+## For example:
+
+In https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/
+
+Press F12 and in the console, the code below can be used for debugging
+
+```
+avatarA.say("hello",2000)
+avatarA.getMotionList()
+avatarA.setMotion("motion:Idle:5")
+
+avatarB.say("hello",2000)
+avatarB.getExpressionList()
+avatarB.setExpression("expression:f05")
+```
+
 # (B) Installation:
 
 ### 1. 
