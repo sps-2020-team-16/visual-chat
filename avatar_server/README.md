@@ -2,16 +2,16 @@
 
 These online versions can be used for debugging
 
-```
 https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/
+
 https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/
-```
 
 # (B) Installation:
 
-## 1. install a latest version of nodejs
+### 1. 
+Install a latest version of nodejs
 
-## 2.
+### 2.
 ```
 cd
 git clone https://github.com/sps-2020-team-16/visual-chat.git
@@ -19,7 +19,7 @@ cd visual-chat/avatar_server/
 npx serve
 ```
 
-## 3.
+### 3.
 ```
 Then use web browsers to open:
 http://localhost:5000/example-iframe/
@@ -27,15 +27,17 @@ http://localhost:5000/CubismSdkForWeb-4-r.1/Samples/TypeScript/iframe/
 http://localhost:5000/CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/
 ```
 
-# (C) regarding the usage of AVATAR class, please check the simplest example in 'example-iframe' folder
+# (C) Regarding the usage of AVATAR class:
 
-# 1. import the helper functions to manipulate 2D avatar models
+Please check the simplest example in 'example-iframe' folder
+
+### 1. import the helper functions to manipulate 2D avatar models
 
 ```
 <script src="../CubismSdkForWeb-4-r.1/Samples/TypeScript/iframe/avatar.js"></script>
 ```
 
-# 2. render the model
+### 2. render the model
 
 Create a new instance of AVATAR class.
 Then render it in one div.
@@ -61,7 +63,7 @@ window.avatarA.renderIn(window.document.getElementById('avatar1'))
 
 ```
 
-# 3. Set Motion and Expression
+### 3. Set Motion and Expression
 
 Use motions' string name or expressions' string name to launch a new motion or expression.
 
