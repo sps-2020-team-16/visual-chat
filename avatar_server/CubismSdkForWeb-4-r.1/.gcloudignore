@@ -23,3 +23,6 @@ venv
 
 # node modules
 node_modules/
+
+# avatar server's backup files
+_avatar_backup_/

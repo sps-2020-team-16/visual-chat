@@ -1,6 +1,8 @@
 
 class AVATAR {
 
+    static iframeDomain = 'http://localhost:5000'
+
     constructor(
         url,
         divWidth,
@@ -21,6 +23,7 @@ class AVATAR {
         this._options = options
 
         this._divRef = null
+        this._innerDiv = null
         this._iframeRef = null
         this._createDiv()
 
@@ -108,6 +111,7 @@ class AVATAR {
         divRef.appendChild(innerDiv)
 
         this._iframeRef = iframeRef
+        this._innerDiv = innerDiv
         this._divRef = divRef
         // return this._divRef
 
@@ -153,34 +157,100 @@ class AVATAR {
 
     }
 
-    getExpressionList() {
+    getExpressionList(usePostMsg = false) {
+        if (usePostMsg) {
+            this._postMsgToIframe({ 'type': 'showExpressionList' })
+            return []
+        }
         return Object.keys(this._iframeRef.contentWindow.AVATAR_MANIPULATE_EXPRESSIONS)
     }
 
-    getExpressionFuncDict(){
+    getExpressionFuncDict(usePostMsg = false) {
+        if (usePostMsg) {
+            this._postMsgToIframe({ 'type': 'showExpressionList' })
+            return {}
+        }
         return this._iframeRef.contentWindow.AVATAR_MANIPULATE_EXPRESSIONS
     }
 
-    setExpression(v) {
+    setExpression(v, usePostMsg = false) {
         const key = String(v)
+        if (usePostMsg) {
+            this._postMsgToIframe({
+                'type': 'setExpression',
+                'expression': key
+            })
+            return
+        }
         if (this._iframeRef.contentWindow.AVATAR_MANIPULATE_EXPRESSIONS.hasOwnProperty(key)) {
             this._iframeRef.contentWindow.AVATAR_MANIPULATE_EXPRESSIONS[key]()
+        }else{
+            console.log(`Invalid expression key: ${ key }`)
         }
     }
 
-    getMotionList() {
+    getMotionList(usePostMsg = false) {
+        if (usePostMsg) {
+            this._postMsgToIframe({ 'type': 'showMotionList' })
+            return []
+        }
         return Object.keys(this._iframeRef.contentWindow.AVATAR_MANIPULATE_MOTIONS)
     }
 
-    getMotionFuncDict(){
+    getMotionFuncDict(usePostMsg = false) {
+        if (usePostMsg) {
+            this._postMsgToIframe({ 'type': 'showMotionList' })
+            return {}
+        }
         return this._iframeRef.contentWindow.AVATAR_MANIPULATE_MOTIONS
     }
 
-    setMotion(v) {
+    setMotion(v, usePostMsg = false) {
         const key = String(v)
+        if (usePostMsg) {
+            this._postMsgToIframe({
+                'type': 'setMotion',
+                'motion': key
+            })
+            return
+        }
         if (this._iframeRef.contentWindow.AVATAR_MANIPULATE_MOTIONS.hasOwnProperty(key)) {
             this._iframeRef.contentWindow.AVATAR_MANIPULATE_MOTIONS[key]()
+        }else{
+            console.log(`Invalid motion key: ${ key }`)
         }
+    }
+
+    release(usePostMsg = false) {
+        if(usePostMsg){
+            this._postMsgToIframe({
+                'type': 'release'
+            })
+        }else{
+            this._iframeRef.contentWindow.AVATAR_RELEASE_FUNC()
+        }
+        // this._divRef.hidden=true
+    }
+
+    getModelList( usePostMsg = false ){
+        if(usePostMsg){
+            this._postMsgToIframe({
+                'type': 'showModelList'
+            })
+            return []
+        }
+        return this._iframeRef.contentWindow.AVATAR_GET_MODEL_LIST()
+    }
+
+    _postMsgToIframe(msgDict) {
+        if ((typeof msgDict) != 'object') {
+            console.log(`Invalid message type: ${typeof msgDict} (The type should be 'object')`)
+            return
+        }
+        this._iframeRef.contentWindow.postMessage(
+            JSON.stringify(msgDict),
+            AVATAR.iframeDomain
+        )
     }
 
     _createBubble() {

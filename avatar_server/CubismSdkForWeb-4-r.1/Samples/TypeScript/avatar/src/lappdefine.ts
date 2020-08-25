@@ -56,6 +56,9 @@ export const pushFrontModelName = ( v: string ) => {
     ModelDir = newModelDir
     ModelDirSize = ModelDir.length;
 }
+export const getModelList = (): string[] => {
+    return ModelDir
+}
 
 // 外部定義ファイル（json）と合わせる
 export const MotionGroupIdle = 'Idle'; // アイドリング
