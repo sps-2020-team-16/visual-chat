@@ -47,6 +47,7 @@ http://localhost:5000/CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/
 
 Please check the simplest example in 'example-iframe' folder:
 
+https://github.com/sps-2020-team-16/visual-chat/tree/ruiyuanqian-Development/avatar_server/example-iframe
 
 ### 1. import the helper functions to manipulate 2D avatar models
 
