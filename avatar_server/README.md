@@ -1,4 +1,33 @@
-# Please check the simplest example in 'example-iframe' folder
+# (A) Online Deployment:
+
+These online versions can be used for debugging
+
+```
+https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/
+https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/
+```
+
+# (B) Installation:
+
+## 1. install a latest version of nodejs
+
+## 2.
+```
+cd
+git clone https://github.com/sps-2020-team-16/visual-chat.git
+cd visual-chat/avatar_server/
+npx serve
+```
+
+## 3.
+```
+Then use web browsers to open:
+http://localhost:5000/example-iframe/
+http://localhost:5000/CubismSdkForWeb-4-r.1/Samples/TypeScript/iframe/
+http://localhost:5000/CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/
+```
+
+# (C) regarding the usage of AVATAR class, please check the simplest example in 'example-iframe' folder
 
 # 1. import the helper functions to manipulate 2D avatar models
 
