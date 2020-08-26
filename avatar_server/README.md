@@ -44,6 +44,7 @@ Then the class called 'AVATAR' will be able to be used.
     <!-- Remote avatar.js -->
     <script src="https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/avatar.js"></script>
     <!-- Local avatar.js -->
+    <!-- <script src="../2-move-these-folders-to-sdk-folder/iframe/avatar.js"></script> -->
     <!-- <script src="../CubismSdkForWeb-4-r.1/Samples/TypeScript/iframe/avatar.js"></script> -->
 
 ```
@@ -193,14 +194,31 @@ But if you want to deploy another avatar service, the steps below can be taken a
 Install a latest version of nodejs
 
 ### 2.
+Download 'Cubism SDK for Web' from:
+
+https://www.live2d.com/en/download/cubism-sdk/
+
+or
+
+https://github.com/Live2D/CubismWebSamples
+
+And move the .zip file to 'visual-chat/avatar_server/'
+
+### 3.
 ```
 cd
 git clone https://github.com/sps-2020-team-16/visual-chat.git
 cd visual-chat/avatar_server/
+
+unzip CubismSdkForWeb-4-r.1.zip
+copy -r ./2-move-these-folders-to-sdk-folder/avatar ./CubismSdkForWeb-4-r.1/Samples/TypeScript/
+copy -r ./2-move-these-folders-to-sdk-folder/iframe ./CubismSdkForWeb-4-r.1/Samples/TypeScript/
+copy -r ./2-move-these-folders-to-sdk-folder/test   ./CubismSdkForWeb-4-r.1/Samples/TypeScript/
+
 npx serve
 ```
 
-### 3.
+### 4.
 ```
 Then use web browsers to open:
 http://localhost:5000/example-iframe/
