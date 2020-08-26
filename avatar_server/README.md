@@ -211,9 +211,9 @@ git clone https://github.com/sps-2020-team-16/visual-chat.git
 cd visual-chat/avatar_server/
 
 unzip CubismSdkForWeb-4-r.1.zip
-copy -r ./2-move-these-folders-to-sdk-folder/avatar ./CubismSdkForWeb-4-r.1/Samples/TypeScript/
-copy -r ./2-move-these-folders-to-sdk-folder/iframe ./CubismSdkForWeb-4-r.1/Samples/TypeScript/
-copy -r ./2-move-these-folders-to-sdk-folder/test   ./CubismSdkForWeb-4-r.1/Samples/TypeScript/
+cp -r ./2-move-these-folders-to-sdk-folder/avatar ./CubismSdkForWeb-4-r.1/Samples/TypeScript/
+cp -r ./2-move-these-folders-to-sdk-folder/iframe ./CubismSdkForWeb-4-r.1/Samples/TypeScript/
+cp -r ./2-move-these-folders-to-sdk-folder/test   ./CubismSdkForWeb-4-r.1/Samples/TypeScript/
 
 npx serve
 ```
