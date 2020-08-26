@@ -1,4 +1,4 @@
-#(A) Online Deployment:
+# (A) Online Deployment:
 
 These online versions can be used for debugging
 
@@ -23,7 +23,7 @@ avatarB.setExpression("expression:f05")
 ```
 
 
-#(B) Usage
+# (B) Usage
 
 Regarding the usage of AVATAR class (and remote/local avatar service)
 
@@ -173,13 +173,15 @@ const releaseAndHide = () => {
 ```
 
 
-#(C) Installation (Server Deployment):
+# (C) Installation (Server Deployment):
 
 The avatar service is a service based on static resources and iframe. 
 
 The service use GET arguments received to modify the model, canvas_size, background, and etc.
 
-These steps can be skipped if you don't need to deploy your own avatar service. Simply check [(B) Usage](#(B)-Usage), import the avatar.js and use AVATAR class to get a model from 'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/'
+These steps can be skipped if you don't need to deploy your own avatar service. 
+
+Simply check [(B) Usage](#(B)-Usage), import the avatar.js and use AVATAR class to get a model from 'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/'
 
 If you want to deploy another avatar service, the steps below can be taken as an example.
 
