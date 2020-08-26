@@ -181,9 +181,13 @@ The service use GET arguments received to modify the model, canvas_size, backgro
 
 These steps can be skipped if you don't need to deploy your own avatar service. 
 
-Simply check [(B) Usage](#(B)-Usage), import the avatar.js and use AVATAR class to get a model from 'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/'
+Simply check [(B) Usage](#b-usage), import the avatar.js and use AVATAR class to get a model from: 
 
-If you want to deploy another avatar service, the steps below can be taken as an example.
+https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/
+
+---
+
+But if you want to deploy another avatar service, the steps below can be taken as an example.
 
 ### 1. 
 Install a latest version of nodejs
