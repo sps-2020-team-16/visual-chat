@@ -29,12 +29,11 @@ Regarding the usage of AVATAR class (and remote/local avatar service)
 
 Please check the simplest example in 'example-iframe' folder:
 
-[example-iframe](./avatar_server/)
-# https://github.com/sps-2020-team-16/visual-chat/tree/ruiyuanqian-Development/avatar_server/example-iframe
+[example-iframe](./example-iframe/)
 
 ### 1. import the helper functions to manipulate 2D avatar models
 
-Import avatar.js from 'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/avatar.js'
+Import avatar.js from https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/avatar.js
 
 (It is also OK to import avatar.js from a local file)
 
@@ -46,7 +45,6 @@ Then the class called 'AVATAR' will be able to be used.
     <script src="https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/avatar.js"></script>
     <!-- Local avatar.js -->
     <!-- <script src="../CubismSdkForWeb-4-r.1/Samples/TypeScript/iframe/avatar.js"></script> -->
-
 
 ```
 
