@@ -61,7 +61,10 @@
     <!-- ######################          Basic usage of avatar.js          ###################### -->
     <!-- ######################################################################################## -->
     
-    <script src="../CubismSdkForWeb-4-r.1/Samples/TypeScript/iframe/avatar.js"></script>
+    <!-- Remote avatar.js -->
+    <script src="https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/avatar.js"></script>
+    <!-- Local avatar.js -->
+    <!-- <script src="../CubismSdkForWeb-4-r.1/Samples/TypeScript/iframe/avatar.js"></script> -->
     <script>
 
         const loadRemoteModel = () => {
@@ -80,8 +83,8 @@
             const modelName = String(window.document.getElementById('model-input').value)   // get the model name (default: Haru)
             console.log(modelName)
             window.avatarA = new AVATAR(
-                'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/',
-                // '../CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/',
+                'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/',        //  Remote Avatar
+                // '../CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/',                                   //  Local Avatar
                 500,        // width of the new div
                 500,        // height of the new div
                 1000,       // width of the canvas (increase this to make the model larger)

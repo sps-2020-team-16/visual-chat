@@ -1,4 +1,4 @@
-# (A) Online Deployment:
+#(A) Online Deployment:
 
 These online versions can be used for debugging
 
@@ -22,39 +22,32 @@ avatarB.getExpressionList()
 avatarB.setExpression("expression:f05")
 ```
 
-# (B) Installation:
 
-### 1. 
-Install a latest version of nodejs
+#(B) Usage
 
-### 2.
-```
-cd
-git clone https://github.com/sps-2020-team-16/visual-chat.git
-cd visual-chat/avatar_server/
-npx serve
-```
-
-### 3.
-```
-Then use web browsers to open:
-http://localhost:5000/example-iframe/
-http://localhost:5000/CubismSdkForWeb-4-r.1/Samples/TypeScript/iframe/
-http://localhost:5000/CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/
-```
-
-# (C) Regarding the usage of AVATAR class:
+Regarding the usage of AVATAR class (and remote/local avatar service)
 
 Please check the simplest example in 'example-iframe' folder:
 
-https://github.com/sps-2020-team-16/visual-chat/tree/ruiyuanqian-Development/avatar_server/example-iframe
+[example-iframe](./avatar_server/)
+# https://github.com/sps-2020-team-16/visual-chat/tree/ruiyuanqian-Development/avatar_server/example-iframe
 
 ### 1. import the helper functions to manipulate 2D avatar models
+
+Import avatar.js from 'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/avatar.js'
+
+(It is also OK to import avatar.js from a local file)
 
 Then the class called 'AVATAR' will be able to be used.
 
 ```
-<script src="../CubismSdkForWeb-4-r.1/Samples/TypeScript/iframe/avatar.js"></script>
+
+    <!-- Remote avatar.js -->
+    <script src="https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/avatar.js"></script>
+    <!-- Local avatar.js -->
+    <!-- <script src="../CubismSdkForWeb-4-r.1/Samples/TypeScript/iframe/avatar.js"></script> -->
+
+
 ```
 
 ### 2. render the model
@@ -169,6 +162,7 @@ const saySth = () => {
 ### 5. Model Release
 
 '.hide()' to hide the avatar
+
 '.release()' to stop the running of the avatar
 
 ```
@@ -179,3 +173,34 @@ const releaseAndHide = () => {
     window.avatarA.hide()
 }
 ```
+
+
+#(C) Installation (Server Deployment):
+
+The avatar service is a service based on static resources and iframe. 
+
+The service use GET arguments received to modify the model, canvas_size, background, and etc.
+
+These steps can be skipped if you don't need to deploy your own avatar service. Simply check [(B) Usage](#(B)-Usage), import the avatar.js and use AVATAR class to get a model from 'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/'
+
+If you want to deploy another avatar service, the steps below can be taken as an example.
+
+### 1. 
+Install a latest version of nodejs
+
+### 2.
+```
+cd
+git clone https://github.com/sps-2020-team-16/visual-chat.git
+cd visual-chat/avatar_server/
+npx serve
+```
+
+### 3.
+```
+Then use web browsers to open:
+http://localhost:5000/example-iframe/
+http://localhost:5000/CubismSdkForWeb-4-r.1/Samples/TypeScript/iframe/
+http://localhost:5000/CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/
+```
+
