@@ -114,3 +114,14 @@ export let onANewModelLoaded = null
 export const setOnANewModelLoaded = ( v ) => {
     onANewModelLoaded = v
 }
+
+export let modelMatrixX         = null
+export let modelMatrixY         = null
+export let modelMatrixWidth     = null
+export let modelMatrixHeight    = null
+export const setModelMatrix = ( aX , aY , aWidth , aHeight ) => {
+    modelMatrixX        = aX
+    modelMatrixY        = aY
+    modelMatrixWidth    = aWidth
+    modelMatrixHeight   = aHeight
+}

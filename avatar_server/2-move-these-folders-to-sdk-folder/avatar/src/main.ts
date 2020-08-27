@@ -13,7 +13,8 @@ import {
   setGearAndBack,
   pushFrontModelName,
   getModelList,
-  setOnANewModelLoaded
+  setOnANewModelLoaded,
+  setModelMatrix
 } from './lappdefine'
 
 const handleArgs = () => {
@@ -43,6 +44,12 @@ const handleArgs = () => {
   if (String(argButtons).toLowerCase() == 'true') {
     setOnANewModelLoaded(renderButtons)
   }
+
+  const argModelMatrixX: number       = parseFloat( url.searchParams.get( 'matrixX'.toLowerCase()       ) ) || null;
+  const argModelMatrixY: number       = parseFloat( url.searchParams.get( 'matrixY'.toLowerCase()       ) ) || null;
+  const argModelMatrixWidth: number   = parseFloat( url.searchParams.get( 'matrixWidth'.toLowerCase()   ) ) || null;
+  const argModelMatrixHeight: number  = parseFloat( url.searchParams.get( 'matrixHeight'.toLowerCase()  ) ) || null;
+  setModelMatrix( argModelMatrixX , argModelMatrixY , argModelMatrixWidth , argModelMatrixHeight );
 
 }
 
