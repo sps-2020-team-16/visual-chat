@@ -78,10 +78,16 @@ export class LAppView {
     this._touchManager = null;
     this._deviceToScreen = null;
 
-    this._gear.release();
+    if(this._gear){
+        this._gear.release();
+    }
+    // this._gear.release();
     this._gear = null;
 
-    this._back.release();
+    if(this._back){
+        this._back.release();
+    }
+    // this._back.release();
     this._back = null;
 
     gl.deleteProgram(this._programId);
@@ -119,6 +125,11 @@ export class LAppView {
    * 画像の初期化を行う。
    */
   public initializeSprite(): void {
+
+    if(!LAppDefine.gearAndBack){
+      return ;
+    }
+
     const width: number = canvas.width;
     const height: number = canvas.height;
 
@@ -230,7 +241,7 @@ export class LAppView {
       live2DManager.onTap(x, y);
 
       // 歯車にタップしたか
-      if (this._gear.isHit(pointX, pointY)) {
+      if ( this._gear && this._gear.isHit(pointX, pointY)) {
         live2DManager.nextScene();
       }
     }
