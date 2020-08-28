@@ -51,16 +51,15 @@ server {
             return 200 'OK!';
         }
 
-        location / {
+        location /saapi {
             proxy_pass http://localhost:5000;
         }
 
-
-#        location / {
-#                # First attempt to serve request as file, then
-#                # as directory, then fall back to displaying a 404.
-#                try_files $uri $uri/ =404;
-#        }
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ =404;
+        }
 
         # pass PHP scripts to FastCGI server
         #
