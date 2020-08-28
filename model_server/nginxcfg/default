@@ -44,7 +44,7 @@ server {
         # Add index.php to the list if you are using PHP
         index index.html index.htm index.nginx-debian.html;
 
-        server_name _;
+        server_name flask-dot-rqian-sps-summer20.df.r.appspot.com;
 
 
         location /_ah/health {

@@ -2,15 +2,15 @@ from application import app, pathName, fullPathToRnn
 from flask import request, jsonify, render_template
 
 
-# @app.route( '/_ah/health' )
-# def doGet_ah_health():
-#     return 'ok'
+@app.route( '/_ah/health' )
+def doGet_ah_health():
+    return 'ok'
 
 
-# @app.route( '/_ah/warmup' )
-# def doGet_ah_warmup():
-#     loadTheRNNModel()
-#     return '', 200, {}
+@app.route( '/_ah/warmup' )
+def doGet_ah_warmup():
+    loadTheRNNModel()
+    return '', 200, {}
 
 
 def loadTheRNNModel():
@@ -46,8 +46,8 @@ def doPost_rnn():
 
         RNNStrToEmotion = loadTheRNNModel()
         sentence = ( request.json ).get( 'sentence' , '' )
-        result = str( RNNStrToEmotion( sentence )[ 'Emotion' ][ 0 ] )
         if( len( sentence ) > 0 ):
+            result = str( RNNStrToEmotion( sentence )[ 'Emotion' ][ 0 ] )
             return jsonify({
                 'status' : 0,
                 'result' : result
@@ -57,7 +57,7 @@ def doPost_rnn():
 
     except Exception as e:
 
-        logger.info( 'repr(e):\n'            + repr( e ) )
+        logger.info( 'repr(e):\n' + repr( e ) )
         logger.info( 'traceback.format_exc():\n%s' % traceback.format_exc() )
         return jsonify({
             'status' : -1,
