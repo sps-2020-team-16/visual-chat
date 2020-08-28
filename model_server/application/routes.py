@@ -61,3 +61,7 @@ def doPost_rnn():
         })
 
 logger.info( ':: Finish importing routes.py ::' )
+
+_ = RNNStrToEmotion( 'Let me be the 1st sentence for warming up!' )
+
+logger.info( ':: Finish warming up ::' )
