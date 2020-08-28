@@ -54,5 +54,13 @@ COPY twitteremotionrecognition ./twitteremotionrecognition
 COPY requirements.txt ./
 RUN pip3 --no-cache-dir install -r ./requirements.txt
 
-ENV PORT=8080
-CMD gunicorn -b :$PORT -w 1 main:app --timeout 600
+# ENV PORT=8080
+# CMD gunicorn -b :$PORT -w 1 main:app --timeout 600
+
+RUN apt-get update -qq \
+ && apt-get install --no-install-recommends -y \
+    nginx
+
+COPY ./nginxcfg/default /etc/nginx/sites-enabled/default
+
+CMD nginx && gunicorn -b :5000 -w 1 main:app --timeout 600

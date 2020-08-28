@@ -2,15 +2,15 @@ from application import app, pathName, fullPathToRnn
 from flask import request, jsonify, render_template
 
 
-@app.route( '/_ah/health' )
-def doGet_ah_health():
-    return 'ok'
+# @app.route( '/_ah/health' )
+# def doGet_ah_health():
+#     return 'ok'
 
 
-@app.route( '/_ah/warmup' )
-def doGet_ah_warmup():
-    loadTheRNNModel()
-    return '', 200, {}
+# @app.route( '/_ah/warmup' )
+# def doGet_ah_warmup():
+#     loadTheRNNModel()
+#     return '', 200, {}
 
 
 def loadTheRNNModel():
@@ -40,3 +40,5 @@ def doPost_rnn():
     if( len(sentence) > 0 ):
         return str( RNNStrToEmotion( sentence ) )
     return 'ok'
+
+loadTheRNNModel()
