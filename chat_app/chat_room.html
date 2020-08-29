@@ -7,9 +7,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/chatroom_style.css">
+  <script src="js/chat_room.js"></script>
 </head>
 
-<body>
+<body onload="loadChatHistory()">
   <nav class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container-fluid"> 
       <div class="navbar-header">
@@ -18,7 +19,7 @@
       <div>
           <ul class="nav navbar-nav">
               <li class="active"><a href="#">David</a></li>
-              <li><a href="#">Sign Out</a></li>
+              <li><a href="./index.html">Sign Out</a></li>
           </ul>
       </div>
     </div>
@@ -39,62 +40,19 @@
   
   <h2>Chat Box</h2>
   <div class="chat-container">
-    <ul class="chat">
-      <li class="message left">
-        <img class="logo" src="imgs/17.jpg" alt="">
-        <p>I'm hungry!</p>
-        <div class="name">
-          Cathy
-        </div>
-      </li>
-      <li class="message right">
-        <img class="logo" src="imgs/67.jpg" alt="">
-        <p>Hi hungry, nice to meet you. I'm Dad.</p>
-        <div class="name">
-          David
-        </div>
-      </li>
-      <li class="message left">
-        <img class="logo" src="imgs/17.jpg" alt="">
-        <p>DAD! I'm serious!</p>
-        <div class="name">
-          Cathy
-        </div>
-      </li>
-      <li class="message right">
-        <img class="logo" src="imgs/67.jpg" alt="">
-        <p>I thought your name was hungry...?</p>
-        <div class="name">
-          David
-        </div>
-      </li>
-      <li class="message right">
-        <img class="logo" src="imgs/67.jpg" alt="">
-        <p>I thought your name was hungry...?</p>
-        <div class="name">
-          David
-        </div>
-      </li>
-      <li class="message right">
-        <img class="logo" src="imgs/67.jpg" alt="">
-        <p>I thought your name was hungry...?</p>
-        <div class="name">
-          David
-        </div>
-      </li>
-    </ul>
+    <ul class="chat" id="chatMsgs"></ul>
   </div>
   <div class="col-lg-6">
     <div class="input-group">
-      <input type="text" class="form-control" placeholder="Message...">
+      <input id="msg" type="text" class="form-control" placeholder="Message...">
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button" onclick="sendMsg()">
+        <button class="btn btn-default" type="submit" onclick="sendMsg()">
           Send
         </button>
       </span>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
-  <script src="js/chat_room.js"></script>
+  
   <script src="https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/avatar.js"></script>
 
   <script>
@@ -134,8 +92,6 @@
     avatarA.getContainerDiv().style['z-index'] = 50
     
     window.avatarA = avatarA
-    setTimeout( ()=>{ avatarA.say( 'hello' , 3000 ) } , 2000 )
-    setTimeout( ()=>{ avatarA.setMotion( 'motion:Idle:5' , true ) } , 20000 )
 
 
     avatarB = new AVATAR(
@@ -167,8 +123,6 @@
     avatarB.getContainerDiv().style['z-index'] = 50
 
     window.avatarB = avatarB
-    setTimeout( ()=>{ avatarB.say( 'hello' , 3000 ) } , 2000 )
-    setTimeout( ()=>{ avatarB.setExpression( 'expression:exp_05.exp3.json' , true ) } , 20000 )
 
 
     avatarC = new AVATAR(
@@ -199,8 +153,6 @@
     avatarC.getContainerDiv().style['z-index'] = 50
 
     window.avatarC = avatarC
-    setTimeout( ()=>{ avatarC.say( 'hello' , 3000 ) } , 2000 )
-    setTimeout( ()=>{ avatarC.setExpression( 'expression:f04' , true ) } , 20000 )
 
 
     avatarD = new AVATAR(
@@ -232,8 +184,6 @@
     avatarD.getContainerDiv().style['z-index'] = 50
 
     window.avatarD = avatarD
-    setTimeout( ()=>{ avatarD.say( 'hello' , 3000 ) } , 5000 )
-    setTimeout( ()=>{ avatarD.setMotion( 'motion:Idle:3' , true ) } , 20000 )
 
   </script>
 
