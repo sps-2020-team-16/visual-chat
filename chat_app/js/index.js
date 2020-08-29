@@ -117,3 +117,11 @@ $(function() {
    });
 
 });
+
+function signIn() {
+   window.location.href = "./chat_room.html";
+}
+
+function signUp() {
+   window.location.href = "./chat_room.html";
+}

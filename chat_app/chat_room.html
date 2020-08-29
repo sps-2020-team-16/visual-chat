@@ -6,7 +6,7 @@
   <title>Chat Box</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/chatroom_style.css">  
+  <link rel="stylesheet" href="css/chatroom_style.css">
 </head>
 
 <body>
@@ -24,23 +24,20 @@
     </div>
   </nav>
 
-  <h2>Chat Box</h2>
   <div id="avatar1">
-    <img class="avatar" src="imgs/3.jpg" alt="">
     <span class="name">Cathy</span>
   </div>
   <div id="avatar2">
-    <img class="avatar" src="imgs/4.jpg" alt="">
     <span class="name">Ron</span>
   </div>
   <div id="avatar3">
-    <img class="avatar" src="imgs/3.jpg" alt="">
     <span class="name">Julia</span>
   </div>
   <div id="avatar4">
-    <img class="avatar" src="imgs/4.jpg" alt="">
     <span class="name">David</span>
   </div>
+  
+  <h2>Chat Box</h2>
   <div class="chat-container">
     <ul class="chat">
       <li class="message left">
@@ -71,18 +68,175 @@
           David
         </div>
       </li>
+      <li class="message right">
+        <img class="logo" src="imgs/67.jpg" alt="">
+        <p>I thought your name was hungry...?</p>
+        <div class="name">
+          David
+        </div>
+      </li>
+      <li class="message right">
+        <img class="logo" src="imgs/67.jpg" alt="">
+        <p>I thought your name was hungry...?</p>
+        <div class="name">
+          David
+        </div>
+      </li>
     </ul>
   </div>
   <div class="col-lg-6">
     <div class="input-group">
       <input type="text" class="form-control" placeholder="Message...">
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button">
+        <button class="btn btn-default" type="button" onclick="sendMsg()">
           Send
         </button>
       </span>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
+  <script src="js/chat_room.js"></script>
+  <script src="https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/avatar.js"></script>
+
+  <script>
+
+    AVATAR.iframeDomain = 'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/'
+
+    const width  = 200
+    const height = 400
+
+    avatarA = new AVATAR(
+        'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/',        //  Remote Avatar
+        // '../CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/',                                   //  Local Avatar
+        width,        // width of the new div
+        height,        // height of the new div
+        width,       // width of the canvas (increase this to make the model larger)
+        height,        // height of the canvas
+        0,          // offset in x direction
+        0,          // offset in y direction
+        {
+            "avatar": 'Hiyori',           // the name of the avatar 2D model
+            "gearandback": "false",     // if true the switching gear the background will appear
+            "buttons": "false",         // skip the render of buttons
+
+                                        ////////////////////////////////////////////////////////////////////////////
+            "matrixHeight": 15.0,        //  Use these 2 arguments to fine resize and reposition the avatar model
+            "matrixY":      -4.5        //  This seems cumbersome, but the performance can be obviously improved.
+                                        ////////////////////////////////////////////////////////////////////////////
+
+        }           // additional arguments to be sent to the avatar service
+    )
+    avatarA.moveTo('avatar1')
+
+    avatarA.getContainerDiv().style.left = '0px'
+    avatarA.getContainerDiv().style.top = '0px'
+
+    // give a relatively high z-index so the avatar won't be covered by other divs/imgs
+    avatarA.getContainerDiv().style['z-index'] = 50
+    
+    window.avatarA = avatarA
+    setTimeout( ()=>{ avatarA.say( 'hello' , 3000 ) } , 2000 )
+    setTimeout( ()=>{ avatarA.setMotion( 'motion:Idle:5' , true ) } , 20000 )
+
+
+    avatarB = new AVATAR(
+        'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/',        //  Remote Avatar
+        // '../CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/',                                   //  Local Avatar
+        width,        // width of the new div
+        height,        // height of the new div
+        width,       // width of the canvas (increase this to make the model larger)
+        height,        // height of the canvas
+        0,          // offset in x direction
+        0,          // offset in y direction
+        {
+            "avatar": 'Natori',           // the name of the avatar 2D model
+            "gearandback": "false",     // if true the switching gear the background will appear
+            "buttons": "false",         // skip the render of buttons
+
+                                        ////////////////////////////////////////////////////////////////////////////
+            "matrixHeight": 15.0,        //  Use these 2 arguments to fine resize and reposition the avatar model
+            "matrixY":      -5.0        //  This seems cumbersome, but the performance can be obviously improved.
+                                        ////////////////////////////////////////////////////////////////////////////
+
+        }           // additional arguments to be sent to the avatar service
+    )
+
+    avatarB.moveTo('avatar2')
+
+    avatarB.getContainerDiv().style.left = '0px'
+    avatarB.getContainerDiv().style.top = '0px'
+    avatarB.getContainerDiv().style['z-index'] = 50
+
+    window.avatarB = avatarB
+    setTimeout( ()=>{ avatarB.say( 'hello' , 3000 ) } , 2000 )
+    setTimeout( ()=>{ avatarB.setExpression( 'expression:exp_05.exp3.json' , true ) } , 20000 )
+
+
+    avatarC = new AVATAR(
+        'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/',        //  Remote Avatar
+        // '../CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/',                                   //  Local Avatar
+        width,        // width of the new div
+        height,        // height of the new div
+        width,       // width of the canvas (increase this to make the model larger)
+        height,        // height of the canvas
+        0,          // offset in x direction
+        0,          // offset in y direction
+        {
+            "avatar": 'Haru',           // the name of the avatar 2D model
+            "gearandback": "false",     // if true the switching gear the background will appear
+            "buttons": "false",         // skip the render of buttons
+
+                                        ////////////////////////////////////////////////////////////////////////////
+            "matrixHeight": 15.0,        //  Use these 2 arguments to fine resize and reposition the avatar model
+            "matrixY":      -5.0        //  This seems cumbersome, but the performance can be obviously improved.
+                                        ////////////////////////////////////////////////////////////////////////////
+
+        }           // additional arguments to be sent to the avatar service
+    )
+    avatarC.moveTo('avatar3')
+
+    avatarC.getContainerDiv().style.left = '0px'
+    avatarC.getContainerDiv().style.top = '0px'
+    avatarC.getContainerDiv().style['z-index'] = 50
+
+    window.avatarC = avatarC
+    setTimeout( ()=>{ avatarC.say( 'hello' , 3000 ) } , 2000 )
+    setTimeout( ()=>{ avatarC.setExpression( 'expression:f04' , true ) } , 20000 )
+
+
+    avatarD = new AVATAR(
+        'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/',        //  Remote Avatar
+        // '../CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/',                                   //  Local Avatar
+        width,        // width of the new div
+        height,        // height of the new div
+        width,       // width of the canvas (increase this to make the model larger)
+        height,        // height of the canvas
+        0,          // offset in x direction
+        0,          // offset in y direction
+        {
+            "avatar": 'Mark',        // the name of the avatar 2D model
+            "gearandback": "false",     // if true the switching gear the background will appear
+            "buttons": "false",          // skip the render of buttons
+
+            ////////////////////////////////////////////////////////////////////////////
+            "matrixHeight": 7.5,        //  Use these 2 arguments to fine resize and reposition the avatar model
+            "matrixY":      0.0        //  This seems cumbersome, but the performance can be obviously improved.
+                                        ////////////////////////////////////////////////////////////////////////////
+
+        }           // additional arguments to be sent to the avatar service
+    )
+    
+    avatarD.moveTo('avatar4')
+
+    avatarD.getContainerDiv().style.left = '0px'
+    avatarD.getContainerDiv().style.top = '0px'
+    avatarD.getContainerDiv().style['z-index'] = 50
+
+    window.avatarD = avatarD
+    setTimeout( ()=>{ avatarD.say( 'hello' , 3000 ) } , 5000 )
+    setTimeout( ()=>{ avatarD.setMotion( 'motion:Idle:3' , true ) } , 20000 )
+
+  </script>
+
 </body>
 
 </html>
