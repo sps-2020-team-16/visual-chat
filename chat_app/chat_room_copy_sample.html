@@ -167,9 +167,9 @@
 
                                         ////////////////////////////////////////////////////////////////////////////
             "matrixHeight": 15.0,        //  Use these 2 arguments to fine resize and reposition the avatar model
-            "matrixY":      -5.0        //  This seems cumbersome, but the performance can be obviously improved.
+            "matrixY":      -5.0,        //  This seems cumbersome, but the performance can be obviously improved.
                                         ////////////////////////////////////////////////////////////////////////////
-
+            "callbackmsg":"avatarcok"
         }           // additional arguments to be sent to the avatar service
     )
     avatarC.getContainerDiv().style.left = '0px'
@@ -180,6 +180,15 @@
     window.document.getElementById('avatar3').style.overflow = 'visible'
     // moveTo is similar as renderIn
     avatarC.moveTo('avatar3')
+
+    // This will not work, because the avatar have not been loaded
+    // avatarC.setExpression( 'expression:f01' , true )
+    // This will work, check line 172 and line 189
+    window.onmessage = (event)=>{
+        if(event.data == 'avatarcok'){
+            avatarC.setExpression( 'expression:f06' , true )
+        }
+    }
 
     //For debugging with F12
     window.avatarC = avatarC

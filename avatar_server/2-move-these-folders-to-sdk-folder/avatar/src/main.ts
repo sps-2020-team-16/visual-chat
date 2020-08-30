@@ -17,6 +17,28 @@ import {
   setModelMatrix
 } from './lappdefine'
 
+
+let callbackMsg = null
+
+let dictAfterLoading = {}
+const afterLoadingANewModel = ()=>{
+    for (let ele in dictAfterLoading){
+        dictAfterLoading[ ele ]();
+    }
+}
+setOnANewModelLoaded( afterLoadingANewModel );
+
+dictAfterLoading[ 'sendCallbackMsg' ] = ()=>{
+  
+  if ( ( callbackMsg != null ) && ( !( window === parent ) ) ){
+      parent.postMessage(
+          String( callbackMsg ),
+          "*"
+      )
+  }
+
+}
+
 const handleArgs = () => {
 
   const url = new URL(window.document.location.href);
@@ -42,7 +64,8 @@ const handleArgs = () => {
 
   const argButtons: string = url.searchParams.get('buttons') || 'true';
   if (String(argButtons).toLowerCase() == 'true') {
-    setOnANewModelLoaded(renderButtons)
+    // setOnANewModelLoaded(renderButtons)
+    dictAfterLoading[ 'renderButtons' ] = renderButtons;
   }
 
   const argModelMatrixX: number       = parseFloat( url.searchParams.get( 'matrixX'.toLowerCase()       ) ) || null;
@@ -50,6 +73,10 @@ const handleArgs = () => {
   const argModelMatrixWidth: number   = parseFloat( url.searchParams.get( 'matrixWidth'.toLowerCase()   ) ) || null;
   const argModelMatrixHeight: number  = parseFloat( url.searchParams.get( 'matrixHeight'.toLowerCase()  ) ) || null;
   setModelMatrix( argModelMatrixX , argModelMatrixY , argModelMatrixWidth , argModelMatrixHeight );
+
+  if (url.searchParams.has('callbackmsg')) {
+    callbackMsg = url.searchParams.get('callbackmsg');
+  }
 
 }
 
@@ -97,6 +124,10 @@ const renderButtons = () => {
 /////   SET_POSTMESSAGE_LISTENER
 ///////////////////////////////////////////////////////////////////////////////////
 window.addEventListener('message', (event) => {
+
+  if( String( event.data ).length <= 0 ){
+      return ;
+  }
 
   const rJson = JSON.parse(event.data)
   if (rJson['type'] == 'setExpression') {
@@ -164,6 +195,14 @@ window.onload = (): void => {
   }
 
   LAppDelegate.getInstance().run();
+
+//   if ( ( callbackMsg != null ) && ( !( window === parent ) ) ){
+//       parent.postMessage(
+//           String( callbackMsg ),
+//           "*"
+//       )
+//   }
+
 };
 
 /**
