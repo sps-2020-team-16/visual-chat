@@ -1,8 +1,93 @@
 // Hard-coded current user
-// Let's assume that there are only four people using this chat room:
-// Cathy, Ron, Julia, and David
-// and their avatars are Hiyori, Natori, Haru, Mark respectively, from left to right.
 current_user = "David"
+
+// Mapping emotions to expressions
+const emotionToExpression = {
+    'Haru': {
+        'Anger': 'expression:f02',
+        'Disgust': 'expression:f07',
+        'Fear': 'expression:f05',
+        'Joy': 'expression:f04',
+        'Sadness': 'expression:f03',
+        'Surprise': 'expression:f01'
+    },
+    'Hiyori': {
+        'Anger': null,
+        'Disgust': null,
+        'Fear': null,
+        'Joy': null,
+        'Sadness': null,
+        'Surprise': null
+    },
+    'Mark': {
+        'Anger': null,
+        'Disgust': null,
+        'Fear': null,
+        'Joy': null,
+        'Sadness': null,
+        'Surprise': null
+    },
+    'Natori': {
+        'Anger': 'expression:exp_05.exp3.json',
+        'Disgust': 'expression:exp_01.exp3.json',
+        'Fear': 'expression:exp_02.exp3.json',
+        'Joy': 'expression:exp_00.exp3.json',
+        'Sadness': 'expression:exp_04.exp3.json',
+        'Surprise': 'expression:exp_00.exp3.json'
+    },
+    'Rice': {
+        'Anger': null,
+        'Disgust': null,
+        'Fear': null,
+        'Joy': null,
+        'Sadness': null,
+        'Surprise': null
+    }
+}
+
+// Mapping emotions to motions
+const emotionToMotion = {
+    'Haru': {
+        'Anger': 'motion:Idle:1',
+        'Disgust': 'motion:TapBody:2',
+        'Fear': 'motion:TapBody:0',
+        'Joy': 'motion:TapBody:1',
+        'Sadness': 'motion:Idle:0',
+        'Surprise': 'motion:TapBody:3'
+    },
+    'Hiyori': {
+        'Anger': 'motion:Idle:8',
+        'Disgust': 'motion:Idle:5',
+        'Fear': 'motion:Idle:5',
+        'Joy': 'motion:Idle:6',
+        'Sadness': 'motion:Idle:8',
+        'Surprise': 'motion:Idle:4'
+    },
+    'Mark': {
+        'Anger': 'motion:Idle:2',
+        'Disgust': 'motion:Idle:3',
+        'Fear': 'motion:Idle:4',
+        'Joy': 'motion:Idle:1',
+        'Sadness': 'motion:Idle:2',
+        'Surprise': 'motion:Idle:5'
+    },
+    'Natori': {
+        'Anger': 'motion:TapBody:5',
+        'Disgust': 'motion:TapBody:4',
+        'Fear': 'motion:TapBody:6',
+        'Joy': 'motion:TapBody:0',
+        'Sadness': 'motion:TapBody:7',
+        'Surprise': 'motion:TapBody:1'
+    },
+    'Rice': {
+        'Anger': 'motion:TapBody:0',
+        'Disgust': 'motion:TapBody:0',
+        'Fear': 'motion:TapBody:1',
+        'Joy': 'motion:TapBody:2',
+        'Sadness': 'motion:Idle:0',
+        'Surprise': 'motion:TapBody:2'
+    }
+}
 
 // Made-up temporary chat history data
 data = [
@@ -29,14 +114,42 @@ data = [
 ];
 
 // On loading
-function loadChatHistory() {
+function loadPage() {
+    // Set current user name in navigation bar
+    var navbarUserName = document.getElementById('navbar-username');
+    var userNameItem = document.createElement('a');
+    userNameItem.setAttribute('href', "#");
+    var name = document.createTextNode(current_user);
+    userNameItem.appendChild(name);
+    navbarUserName.appendChild(userNameItem);
+
     for (var i = 0; i < data.length; i++) {
         // Add to the chat box
         addMsg(data[i]);
     }
 
+    // Load models
+    loadModelToChatRoom("Hiyori", "Cathy", "avatar1");
+    loadModelToChatRoom("Natori", "Ron", "avatar2");
+    loadModelToChatRoom("Haru", "Julia", "avatar3");
+    loadModelToChatRoom("Mark", "David", "avatar4");
+
     // Hard-coded for demo: display Cathy's unhappy emotion
-    displayEmotion(window.avatarA, null, null, "motion:Idle:8", 3000);
+    displayEmotion(window.avatar1, null, emotionToExpression["Hiyori"]["Anger"], emotionToMotion["Hiyori"]["Anger"], 10000);
+}
+
+// Load avatar model and its user name to chat room
+function loadModelToChatRoom(modelName, userName, divId) {
+    var avatar = loadModel(modelName);
+    avatar.moveTo(divId);
+    window[divId] = avatar;
+    
+    var nameItem = document.createElement("span");
+    nameItem.setAttribute("class", "name");
+    var name = document.createTextNode(userName);
+    nameItem.appendChild(name);
+
+    document.getElementById(divId).appendChild(nameItem);
 }
 
 // Current user sends a message
@@ -54,13 +167,12 @@ function sendMsg() {
     };
     addMsg(msgObj);
 
-    var expression = null; // should be fetched from server response
-    var motion = 'motion:Idle:3'; // should be fetched from server response
+    var emotion = "Sadness"; // should be fetched from server response
 
     // Call displayEmotion to display emotions and words
     // Need to modify window.avatarD according to current user
     // Now current_user is always set to David, and David is avatarD(the fourth avatar)
-    displayEmotion(window.avatarD, msg, expression, motion);
+    displayEmotion(window.avatar4, msg, emotionToExpression["Mark"][emotion], emotionToMotion["Mark"][emotion]);
     
 }
 

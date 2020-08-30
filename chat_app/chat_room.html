@@ -7,10 +7,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/chatroom_style.css">
+  <script src="https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/avatar.js"></script>
+  <script src="js/load_avatar.js"></script>
   <script src="js/chat_room.js"></script>
 </head>
 
-<body onload="loadChatHistory()">
+<body onload="loadPage()">
   <nav class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container-fluid"> 
       <div class="navbar-header">
@@ -18,25 +20,17 @@
       </div>
       <div>
           <ul class="nav navbar-nav">
-              <li class="active"><a href="#">David</a></li>
+              <li class="active" id="navbar-username"></li>
               <li><a href="./index.html">Sign Out</a></li>
           </ul>
       </div>
     </div>
   </nav>
 
-  <div id="avatar1">
-    <span class="name">Cathy</span>
-  </div>
-  <div id="avatar2">
-    <span class="name">Ron</span>
-  </div>
-  <div id="avatar3">
-    <span class="name">Julia</span>
-  </div>
-  <div id="avatar4">
-    <span class="name">David</span>
-  </div>
+  <div id="avatar1"></div>
+  <div id="avatar2"></div>
+  <div id="avatar3"></div>
+  <div id="avatar4"></div>
   
   <h2>Chat Box</h2>
   <div class="chat-container">
@@ -52,140 +46,6 @@
       </span>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
-  
-  <script src="https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/iframe/avatar.js"></script>
-
-  <script>
-
-    AVATAR.iframeDomain = 'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/'
-
-    const width  = 200
-    const height = 400
-
-    avatarA = new AVATAR(
-        'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/',        //  Remote Avatar
-        // '../CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/',                                   //  Local Avatar
-        width,        // width of the new div
-        height,        // height of the new div
-        width,       // width of the canvas (increase this to make the model larger)
-        height,        // height of the canvas
-        0,          // offset in x direction
-        0,          // offset in y direction
-        {
-            "avatar": 'Hiyori',           // the name of the avatar 2D model
-            "gearandback": "false",     // if true the switching gear the background will appear
-            "buttons": "false",         // skip the render of buttons
-
-                                        ////////////////////////////////////////////////////////////////////////////
-            "matrixHeight": 15.0,        //  Use these 2 arguments to fine resize and reposition the avatar model
-            "matrixY":      -4.5        //  This seems cumbersome, but the performance can be obviously improved.
-                                        ////////////////////////////////////////////////////////////////////////////
-
-        }           // additional arguments to be sent to the avatar service
-    )
-    avatarA.moveTo('avatar1')
-
-    avatarA.getContainerDiv().style.left = '0px'
-    avatarA.getContainerDiv().style.top = '0px'
-
-    // give a relatively high z-index so the avatar won't be covered by other divs/imgs
-    avatarA.getContainerDiv().style['z-index'] = 50
-    
-    window.avatarA = avatarA
-
-
-    avatarB = new AVATAR(
-        'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/',        //  Remote Avatar
-        // '../CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/',                                   //  Local Avatar
-        width,        // width of the new div
-        height,        // height of the new div
-        width,       // width of the canvas (increase this to make the model larger)
-        height,        // height of the canvas
-        0,          // offset in x direction
-        0,          // offset in y direction
-        {
-            "avatar": 'Natori',           // the name of the avatar 2D model
-            "gearandback": "false",     // if true the switching gear the background will appear
-            "buttons": "false",         // skip the render of buttons
-
-                                        ////////////////////////////////////////////////////////////////////////////
-            "matrixHeight": 15.0,        //  Use these 2 arguments to fine resize and reposition the avatar model
-            "matrixY":      -5.0        //  This seems cumbersome, but the performance can be obviously improved.
-                                        ////////////////////////////////////////////////////////////////////////////
-
-        }           // additional arguments to be sent to the avatar service
-    )
-
-    avatarB.moveTo('avatar2')
-
-    avatarB.getContainerDiv().style.left = '0px'
-    avatarB.getContainerDiv().style.top = '0px'
-    avatarB.getContainerDiv().style['z-index'] = 50
-
-    window.avatarB = avatarB
-
-
-    avatarC = new AVATAR(
-        'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/',        //  Remote Avatar
-        // '../CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/',                                   //  Local Avatar
-        width,        // width of the new div
-        height,        // height of the new div
-        width,       // width of the canvas (increase this to make the model larger)
-        height,        // height of the canvas
-        0,          // offset in x direction
-        0,          // offset in y direction
-        {
-            "avatar": 'Haru',           // the name of the avatar 2D model
-            "gearandback": "false",     // if true the switching gear the background will appear
-            "buttons": "false",         // skip the render of buttons
-
-                                        ////////////////////////////////////////////////////////////////////////////
-            "matrixHeight": 15.0,        //  Use these 2 arguments to fine resize and reposition the avatar model
-            "matrixY":      -5.0        //  This seems cumbersome, but the performance can be obviously improved.
-                                        ////////////////////////////////////////////////////////////////////////////
-
-        }           // additional arguments to be sent to the avatar service
-    )
-    avatarC.moveTo('avatar3')
-
-    avatarC.getContainerDiv().style.left = '0px'
-    avatarC.getContainerDiv().style.top = '0px'
-    avatarC.getContainerDiv().style['z-index'] = 50
-
-    window.avatarC = avatarC
-
-
-    avatarD = new AVATAR(
-        'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/',        //  Remote Avatar
-        // '../CubismSdkForWeb-4-r.1/Samples/TypeScript/avatar/',                                   //  Local Avatar
-        width,        // width of the new div
-        height,        // height of the new div
-        width,       // width of the canvas (increase this to make the model larger)
-        height,        // height of the canvas
-        0,          // offset in x direction
-        0,          // offset in y direction
-        {
-            "avatar": 'Mark',        // the name of the avatar 2D model
-            "gearandback": "false",     // if true the switching gear the background will appear
-            "buttons": "false",          // skip the render of buttons
-
-            ////////////////////////////////////////////////////////////////////////////
-            "matrixHeight": 7.5,        //  Use these 2 arguments to fine resize and reposition the avatar model
-            "matrixY":      0.0        //  This seems cumbersome, but the performance can be obviously improved.
-                                        ////////////////////////////////////////////////////////////////////////////
-
-        }           // additional arguments to be sent to the avatar service
-    )
-    
-    avatarD.moveTo('avatar4')
-
-    avatarD.getContainerDiv().style.left = '0px'
-    avatarD.getContainerDiv().style.top = '0px'
-    avatarD.getContainerDiv().style['z-index'] = 50
-
-    window.avatarD = avatarD
-
-  </script>
 
 </body>
 
