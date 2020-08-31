@@ -18,7 +18,29 @@ app.use(session({
 }));
 
 app.use(bodyParser.json());
-app.use('/', express.static(path.join(__dirname, '../chat_app')))
+// app.use('/', express.static(path.join(__dirname, '../chat_app')))
+
+app.use(
+    (req , res , next) => {
+        if(!req.session.user && ( [ '/chat_room.html' ].includes( req.originalUrl ) ) ){
+            res.redirect('/index.html')
+        }else{
+            next()
+        }
+    }
+)
+
+app.use( express.static(path.join(__dirname, '../chat_app')))
+
+app.use(
+    (req , res , next) => {
+        if(!req.session.user && !( [ '/index.html' , '/api/login' , '/api/register' ].includes( req.originalUrl ) ) ){
+            res.redirect('/index.html')
+        }else{
+            next()
+        }
+    }
+)
 
 app.post('/api/register', UserHandler.register);
 app.post('/api/login', UserHandler.login);
