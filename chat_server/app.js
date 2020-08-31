@@ -1,0 +1,47 @@
+const express = require('express');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const path = require('path');
+
+const app = express();
+
+const PullClient = require('./src/controller/push/pull_client');
+const PushService = require('./src/controller/push/push_service');
+
+const UserHandler = require('./src/controller/user/user_handler')
+const ChatHandler = require('./src/controller/chat/chat_handler')
+
+app.use(session({
+  resave: false, // don't save session if unmodified
+  saveUninitialized: false, // don't create session until something stored
+  secret: 'visual_chat'
+}));
+
+app.use(bodyParser.json());
+app.use('/', express.static(path.join(__dirname, '../chat_app')))
+
+app.post('/api/register', UserHandler.register);
+app.post('/api/login', UserHandler.login);
+app.post('/api/logout', UserHandler.logout);
+app.get('/api/current', UserHandler.current);
+
+app.post('/api/chat/send', ChatHandler.send_message);
+app.post('/api/chat/pull', ChatHandler.pull_update);
+
+app.get('/', function(req, res){
+//   res.send('Hello World');
+  
+  if (req.session.views) {
+    ++req.session.views;
+  } else {
+    req.session.views = 1;
+  }
+
+  res.send("Views: " + req.session.views + " User: " + req.session.user);
+});
+
+/* istanbul ignore next */
+if (!module.parent) {
+  app.listen(8080);
+  console.log('Express started on port 8080');
+}
