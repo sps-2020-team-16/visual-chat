@@ -38,6 +38,13 @@ async function register_internal(req) {
     if (req.session.user) {
         return ret;
     }
+    
+    //I have to limit the username with /^[a-zA-Z]+[a-zA-Z0-9]*$/ , so that the profile images and GET url arguments can be safely used.
+    if( !!!username.match( /^[a-zA-Z]+[a-zA-Z0-9]*$/ ) ){
+        ret.message = "Only the non-empty usernames starting letters and then numbers or letters are allowed (e.g. David123)"
+        return ret
+    }
+
     let user = await User.addUser(username, password);
     if (user == null) {
         ret.message = "User exist";

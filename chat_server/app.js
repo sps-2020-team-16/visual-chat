@@ -35,6 +35,20 @@ app.use(
         }
     }
 )
+app.use(
+    ( req , res , next ) => {
+        if( req.originalUrl == '/chat_room.html' ){
+            const targetPath = `/chat_room.html?user=${ req.session.user }&avatar=${ req.session.avatar }`
+            if( req.path != targetPath ){
+                res.redirect( targetPath )
+            }else{
+                next()
+            }
+        }else{
+            next()
+        }
+    }
+)
 
 app.use( express.static(path.join(__dirname, '../chat_app')))
 
