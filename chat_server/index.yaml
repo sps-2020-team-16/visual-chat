@@ -1,0 +1,8 @@
+indexes:
+
+- kind: Message
+  ancestor: no
+  properties:
+  - name: room
+  - name: time
+    direction: desc
