@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Visual Chat</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.bootcss.com/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/index_style.css">
 </head>
 
@@ -73,13 +75,29 @@
                 <input type="password" name="pass" id="pass">
                 <span class="spin"></span>
             </div>
+            
+            <div class="input">
+                <p>Avatar</p>
+                <select class="form-control" id="avatar-select">
+                  <option>Random</option>
+                  <option>Hiyori</option>
+                  <option>Natori</option>
+                  <option>Haru</option>
+                  <option>Mark</option>
+                  <option>Rice</option>
+                </select>
+            </div>
+
             <div class="button login">
+<<<<<<< HEAD
                 <button onclick="signInFunction()">
+=======
+                <button onclick="signIn()">
+>>>>>>> master
                     <span>Sign In</span>
                     <i class="fa fa-check"></i>
                 </button>
             </div>
-            <a href="javascript:" class="pass-forgot">Forgot Password?</a>
         </div>
 
         <div class="overbox">
@@ -103,13 +121,18 @@
                 <span class="spin"></span>
             </div>
             <div class="button">
+<<<<<<< HEAD
                 <button onclick="signUpFunction()">
+=======
+                <button onclick="signUp()">
+>>>>>>> master
                     <span>Sign Up</span>
                 </button>
             </div>
         </div>
 
     </div>
+<<<<<<< HEAD
 
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
     </script>
@@ -234,6 +257,13 @@
 
         });
     </script>
+=======
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/index.js"></script>
+>>>>>>> master
 </body>
 
 </html>

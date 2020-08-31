@@ -92,6 +92,7 @@
 
 .input,
 .input label,
+.input p,
 .input input,
 .input .spin,
 .button,
@@ -122,11 +123,17 @@
 
 .input input,
 .input label,
+.input p,
 .button button {
    font-family: 'Roboto', sans-serif;
    font-size: 24px;
    color: rgba(0, 0, 0, 0.8);
    font-weight: 300;
+}
+
+.input p {
+   position: relative;
+   top: -15px;
 }
 
 .input:before,
@@ -158,7 +165,7 @@
    background: rgba(255, 255, 255, 0.5);
 }
 
-.input label {
+.input label{
    position: absolute;
    top: 10px;
    left: 0;
@@ -398,4 +405,10 @@ html {
    text-decoration: none;
    list-style-type: none;
    outline: none;
+}
+
+.form-control {
+   position: relative;
+   top: -15px;
+   left: 0px;
 }

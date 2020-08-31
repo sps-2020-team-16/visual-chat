@@ -117,3 +117,16 @@ $(function() {
    });
 
 });
+
+function signIn() {
+   // TODO: a real sign in procedure
+   // Currently just alert the selected avatar name and jump to chat room
+   alert(document.getElementById('avatar-select').value);
+   window.location.href = "./chat_room.html";
+}
+
+function signUp() {
+   // TODO: a real sign up procedure
+   // Currently just jump to chat room
+   window.location.href = "./chat_room.html";
+}
