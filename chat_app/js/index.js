@@ -175,7 +175,6 @@ function signUp() {
     }
     if( argRegpass != argReregpass ){
         alert('2 passwords are different')
-        window.location.href = "/index.html"
         return 
     }
 

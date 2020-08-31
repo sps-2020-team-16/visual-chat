@@ -1,5 +1,7 @@
+const current_URL = new URL( window.document.location )
+
 // Hard-coded current user
-current_user = "David"
+current_user = current_URL.searchParams.get('user') || "David"
 
 // Mapping emotions to expressions
 const emotionToExpression = {

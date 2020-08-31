@@ -23,11 +23,11 @@ app.use(bodyParser.json());
 app.use(
     (req , res , next) => {
         if( 
-            req.session.user && [ '/index.html' ].includes( req.originalUrl ) 
+            req.session.user && [ '/index.html' ].includes( req.path ) 
             ){
             res.redirect('/chat_room.html')
         }else if( 
-            !req.session.user && [ '/chat_room.html' ].includes( req.originalUrl ) 
+            !req.session.user && [ '/chat_room.html' ].includes( req.path ) 
             ){
             res.redirect('/index.html')
         }else{
@@ -37,10 +37,10 @@ app.use(
 )
 app.use(
     ( req , res , next ) => {
-        if( req.originalUrl == '/chat_room.html' ){
-            const targetPath = `/chat_room.html?user=${ req.session.user }&avatar=${ req.session.avatar }`
-            if( req.path != targetPath ){
-                res.redirect( targetPath )
+        if( req.path == '/chat_room.html' ){
+            const targetOriURL = `/chat_room.html?user=${ req.session.user }&avatar=${ req.session.avatar }`
+            if( req.originalUrl != targetOriURL ){
+                res.redirect( targetOriURL )
             }else{
                 next()
             }
@@ -54,7 +54,7 @@ app.use( express.static(path.join(__dirname, '../chat_app')))
 
 app.use(
     (req , res , next) => {
-        if(!req.session.user && !( [ '/index.html' , '/api/login' , '/api/register' ].includes( req.originalUrl ) ) ){
+        if(!req.session.user && !( [ '/index.html' , '/api/login' , '/api/register' ].includes( req.path ) ) ){
             res.redirect('/index.html')
         }else{
             next()
