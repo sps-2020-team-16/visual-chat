@@ -259,3 +259,22 @@ function addMsg(obj) {
 
     chatMsgs.appendChild(chatItem);
 }
+
+function fetchToLogout(){
+    
+    fetch(
+        '/api/logout', 
+        { 
+            method: 'POST', 
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({}) 
+        }
+        ).then( res => res.json() ).then( ( rJson ) => {
+
+            if( rJson['status'] == 0 ){
+                window.location.href = "/index.html";
+            }
+
+        } )
+        
+}
