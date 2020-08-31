@@ -16,7 +16,8 @@ async function addMessage(room, data) {
 }
 
 async function getMessage(room, after, before) {
-    after = after ?? Common.time();
+    // after = after ?? Common.time();
+    after = after || Common.time();
     var query = datastore
         .createQuery('Message')
         .filter('room', '=', room)
