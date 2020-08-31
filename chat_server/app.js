@@ -22,7 +22,13 @@ app.use(bodyParser.json());
 
 app.use(
     (req , res , next) => {
-        if(!req.session.user && ( [ '/chat_room.html' ].includes( req.originalUrl ) ) ){
+        if( 
+            req.session.user && [ '/index.html' ].includes( req.originalUrl ) 
+            ){
+            res.redirect('/chat_room.html')
+        }else if( 
+            !req.session.user && [ '/chat_room.html' ].includes( req.originalUrl ) 
+            ){
             res.redirect('/index.html')
         }else{
             next()

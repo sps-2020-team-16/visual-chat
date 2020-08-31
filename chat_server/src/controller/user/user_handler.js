@@ -22,6 +22,9 @@ async function login_internal(req) {
     ret.status = 0;
     ret.message = "Ok";
     req.session.user = username;
+
+    req.session.avatar = req.body.avatar || 'Random'
+    
     return ret;
 }
 
@@ -42,7 +45,9 @@ async function register_internal(req) {
     }
     ret.status = 0;
     ret.message = "Ok";
-    req.session.user = username;
+
+    // req.session.user = username;
+    
     return ret;
 }
 
@@ -66,7 +71,8 @@ async function logout(req, res) {
 async function current(req, res) {
     let ret = {
         status: 0,
-        user: req.session.user
+        user: req.session.user,
+        avatar: req.session.avatar
     };
     res.send(JSON.stringify(ret));
 }

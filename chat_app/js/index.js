@@ -121,12 +121,84 @@ $(function() {
 function signIn() {
    // TODO: a real sign in procedure
    // Currently just alert the selected avatar name and jump to chat room
-   alert(document.getElementById('avatar-select').value);
-   window.location.href = "./chat_room.html";
+
+    argName = String( window.document.getElementById('name').value )
+    argPass = String( window.document.getElementById('pass').value )
+    argAvatar = String( window.document.getElementById('avatar-select').value )
+
+    if( argName.length <= 0 || argPass.length <= 0 ){
+        alert('empty username or password')
+        window.location.href = "/index.html"
+        return 
+    }
+
+    fetch(
+        '/api/login', 
+        { 
+            method: 'POST', 
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({ 
+                "username": argName, 
+                "password": argPass,
+                "avatar": argAvatar
+            }) 
+        }
+        ).then( res => res.json() ).then( ( rJson ) => {
+            setTimeout(
+                ()=>{
+                    if( rJson['status'] == 0 ){
+                        window.location.href = "/chat_room.html";
+                    }else{
+                        alert( String( rJson[ 'message' ] ) )
+                        window.location.href = "/index.html";
+                    }
+                }, 399
+            )
+        } )
+
+//    alert(document.getElementById('avatar-select').value);
+//    window.location.href = "./chat_room.html";
 }
 
 function signUp() {
    // TODO: a real sign up procedure
    // Currently just jump to chat room
-   window.location.href = "./chat_room.html";
+
+    argRegname      = String( window.document.getElementById('regname').value )
+    argRegpass      = String( window.document.getElementById('regpass').value )
+    argReregpass    = String( window.document.getElementById('reregpass').value )
+
+    if( argRegname.length <= 0 || argRegpass.length <= 0 || argReregpass <= 0 ){
+        alert('empty username or password')
+        window.location.href = "/index.html"
+        return 
+    }
+    if( argRegpass != argReregpass ){
+        alert('2 passwords are different')
+        window.location.href = "/index.html"
+        return 
+    }
+
+    fetch(
+        '/api/register', 
+        { 
+            method: 'POST', 
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({ 
+                "username": argRegname, 
+                "password": argRegpass
+            }) 
+        }
+        ).then( res => res.json() ).then( ( rJson ) => {
+
+            if( rJson['status'] == 0 ){
+                window.location.href = "/index.html";
+            }else{
+                alert( String( rJson[ 'message' ] ) )
+            }
+
+        } )
+
+
+//    window.location.href = "./chat_room.html";
 }
