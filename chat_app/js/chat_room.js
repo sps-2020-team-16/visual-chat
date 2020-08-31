@@ -187,13 +187,44 @@ function loadModelToChatRoom(modelName, userName, divId) {
     document.getElementById(divId).appendChild(nameItem);
 }
 
-// Current user sends a message
-function sendMsg() {
-    var msg = window.document.getElementById('msg').value;
-    window.document.getElementById('msg').value = "";
+let lastTimeStamp = -1
+const msgLoop = ( ignoreAvatar )=>{
     
-    // TODO: interact with backend server
+    fetch(
+        '/api/chat/pulllight',
+        {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                room: "room-test"
+            })
+        }
+    ).then( res => res.json() ).then( ( rJson ) => {
+        // console.log(rJson)
+        for(let i in rJson){
+            ele = rJson[i]
+            if(ele.time > lastTimeStamp){
 
+                console.log(ele)
+                updateForMsg( ele )
+                if(!ignoreAvatar){
+                    updateForAvatar( ele )
+                }
+
+                lastTimeStamp = ele.time
+            }
+        }
+    } )
+
+}
+msgLoop( true )
+setInterval( ()=>{
+    msgLoop( false )
+} ,1000)
+
+const updateForMsg = (ele) => {
+    
+    const msg = ele['message'] || ''
     // Add the newly-sent msg to chat box
     var msgObj = {
         "timestamp": Date.now(),
@@ -202,12 +233,58 @@ function sendMsg() {
     };
     addMsg(msgObj);
 
-    var emotion = "Sadness"; // should be fetched from server response
+}
 
-    // Call displayEmotion to display emotions and words
-    // Need to modify window.avatarD according to current user
-    // Now current_user is always set to David, and David is avatarD(the fourth avatar)
-    displayEmotion(window.avatar4, msg, emotionToExpression["Mark"][emotion], emotionToMotion["Mark"][emotion]);
+const avatarDivs = [
+    'avatar1',
+    'avatar2',
+    'avatar3',
+    'avatar4'
+]
+const updateForAvatar = (ele) => {
+    
+
+
+}
+
+
+// Current user sends a message
+function sendMsg() {
+
+    var msg = window.document.getElementById('msg').value;
+    window.document.getElementById('msg').value = "";
+
+    fetch(
+        '/api/chat/send',
+        {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: msg,
+                room: "room-test"
+            })
+        }
+    )//.then(res => res.json()).then(rJson => console.log(rJson))
+
+    // var msg = window.document.getElementById('msg').value;
+    // window.document.getElementById('msg').value = "";
+    
+    // // TODO: interact with backend server
+
+    // // Add the newly-sent msg to chat box
+    // var msgObj = {
+    //     "timestamp": Date.now(),
+	// 	"user_name": current_user,
+	// 	"text": msg
+    // };
+    // addMsg(msgObj);
+
+    // var emotion = "Sadness"; // should be fetched from server response
+
+    // // Call displayEmotion to display emotions and words
+    // // Need to modify window.avatarD according to current user
+    // // Now current_user is always set to David, and David is avatarD(the fourth avatar)
+    // displayEmotion(window.avatar4, msg, emotionToExpression["Mark"][emotion], emotionToMotion["Mark"][emotion]);
     
 }
 

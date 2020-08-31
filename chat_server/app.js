@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.use(
     (req , res , next) => {
         if( 
-            req.session.user && [ '/index.html' ].includes( req.path ) 
+            req.session.user && [ '/index.html' , '/' ].includes( req.path ) 
             ){
             res.redirect('/chat_room.html')
         }else if( 
@@ -54,7 +54,7 @@ app.use( express.static(path.join(__dirname, '../chat_app')))
 
 app.use(
     (req , res , next) => {
-        if(!req.session.user && !( [ '/index.html' , '/api/login' , '/api/register' ].includes( req.path ) ) ){
+        if(!req.session.user && !( [ '/index.html' , '/' , '/api/login' , '/api/register' ].includes( req.path ) ) ){
             res.redirect('/index.html')
         }else{
             next()
@@ -68,7 +68,11 @@ app.post('/api/logout', UserHandler.logout);
 app.get('/api/current', UserHandler.current);
 
 app.post('/api/chat/send', ChatHandler.send_message);
-app.post('/api/chat/pull', ChatHandler.pull_update);
+
+// It's too expensive in computing to do a query for each post. Datastore only has 50000 free quota for queries per day.
+// app.post('/api/chat/pull', ChatHandler.pull_update);
+
+app.post('/api/chat/pulllight', ChatHandler.pull_update_light)
 
 app.get('/', function(req, res){
 //   res.send('Hello World');

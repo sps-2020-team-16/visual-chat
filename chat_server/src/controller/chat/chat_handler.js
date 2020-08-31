@@ -50,10 +50,15 @@ async function send_message_internal(req) {
         type: "message",
         sender: user.username,
         // save avatar
+        //////////////////////////////////
         avatar: req.session.avatar,
         message: message,
         emotion: await Emotion.getEmotionWithTimeout(message)
     };
+    // add a new update to updates
+    //////////////////////////////////
+    update_the_updates( room , Object.assign( data ) )
+
     let chat_msg = await Chat.addMessage(room, data);
     PushService.service.broadcast(room, chat_msg);
     ret.status = 0;
@@ -66,3 +71,19 @@ async function send_message(req, res) {
 
 exports.pull_update = pull_update;
 exports.send_message = send_message;
+
+// nodejs runs on a single-thread, no need to use mutex
+let updatesList = {}
+const updatesLength = 10
+async function update_the_updates( room , data ){
+    updatesList[room] = updatesList[room] || []
+    data.time = Common.time()
+    updatesList[room] = updatesList[room].concat( [data] )
+    if(updatesList.length > updatesLength){
+        updatesList = updatesList.slice(1)
+    }
+}
+async function pull_update_light(req, res){
+    res.send(JSON.stringify(updatesList[req.body.room] || []))
+}
+exports.pull_update_light = pull_update_light
