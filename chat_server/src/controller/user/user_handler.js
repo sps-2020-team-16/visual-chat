@@ -23,7 +23,20 @@ async function login_internal(req) {
     ret.message = "Ok";
     req.session.user = username;
 
-    req.session.avatar = req.body.avatar || 'Random'
+    avatarChosen = req.body.avatar || 'Random'
+    // This is hard coding. Hope this can be optimized.
+    const AVATAR_LIST = [
+        'Hiyori',
+        'Natori',
+        'Haru',
+        'Mark',
+        'Rice'
+    ]
+    if( !AVATAR_LIST.includes( avatarChosen ) ){
+        const avatarIndx = Math.floor( Math.random() * AVATAR_LIST.length )
+        avatarChosen = AVATAR_LIST[ avatarIndx ]
+    }
+    req.session.avatar = avatarChosen
     
     return ret;
 }

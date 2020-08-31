@@ -49,6 +49,8 @@ async function send_message_internal(req) {
     var data = {
         type: "message",
         sender: user.username,
+        // save avatar
+        avatar: req.session.avatar,
         message: message,
         emotion: await Emotion.getEmotionWithTimeout(message)
     };

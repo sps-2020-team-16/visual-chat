@@ -251,7 +251,7 @@ function addMsg(obj) {
     }
 
     // Set head portrait displayed in the chat box
-    logoItem.setAttribute("src", a2z[obj["user_name"][0]]);
+    logoItem.setAttribute("src", a2z[  (obj["user_name"][0]).toUpperCase()  ]);
 
     chatItem.appendChild(logoItem);
     chatItem.appendChild(msg);
@@ -276,5 +276,5 @@ function fetchToLogout(){
             }
 
         } )
-        
+
 }
