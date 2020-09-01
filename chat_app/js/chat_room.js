@@ -158,24 +158,35 @@ function loadPage() {
     userNameItem.appendChild(name);
     navbarUserName.appendChild(userNameItem);
 
-    for (var i = 0; i < data.length; i++) {
-        // Add to the chat box
-        addMsg(data[i]);
-    }
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // ////    mock chatting code
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // Load models
-    loadModelToChatRoom("Hiyori", "Cathy", "avatar1");
-    loadModelToChatRoom("Natori", "Ron", "avatar2");
-    loadModelToChatRoom("Haru", "Julia", "avatar3");
-    loadModelToChatRoom("Mark", "David", "avatar4");
+    // for (var i = 0; i < data.length; i++) {
+    //     // Add to the chat box
+    //     addMsg(data[i]);
+    // }
 
-    // Hard-coded for demo: display Cathy's unhappy emotion
-    displayEmotion(window.avatar1, null, emotionToExpression["Hiyori"]["Anger"], emotionToMotion["Hiyori"]["Anger"], 10000);
+    // // Load models
+    // loadModelToChatRoom("Hiyori", "Cathy", "avatar1");
+    // loadModelToChatRoom("Natori", "Ron", "avatar2");
+    // loadModelToChatRoom("Haru", "Julia", "avatar3");
+    // loadModelToChatRoom("Mark", "David", "avatar4");
+
+    // // Hard-coded for demo: display Cathy's unhappy emotion
+    // displayEmotion(window.avatar1, null, emotionToExpression["Hiyori"]["Anger"], emotionToMotion["Hiyori"]["Anger"], 10000);
+
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // ////    mock chatting code
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 }
 
 // Load avatar model and its user name to chat room
-function loadModelToChatRoom(modelName, userName, divId) {
-    var avatar = loadModel(modelName);
+function loadModelToChatRoom(modelName, userName, divId , callbackFlag = null) {
+    var avatar = loadModel( modelName , callbackFlag );
     avatar.moveTo(divId);
     window[divId] = avatar;
     
@@ -185,6 +196,7 @@ function loadModelToChatRoom(modelName, userName, divId) {
     nameItem.appendChild(name);
 
     document.getElementById(divId).appendChild(nameItem);
+    return avatar
 }
 
 let lastTimeStamp = -1
@@ -200,12 +212,12 @@ const msgLoop = ( ignoreAvatar )=>{
             })
         }
     ).then( res => res.json() ).then( ( rJson ) => {
-        // console.log(rJson)
+
         for(let i in rJson){
             ele = rJson[i]
             if(ele.time > lastTimeStamp){
 
-                console.log(ele)
+                // console.log(ele)
                 updateForMsg( ele )
                 if(!ignoreAvatar){
                     updateForAvatar( ele )
@@ -218,9 +230,14 @@ const msgLoop = ( ignoreAvatar )=>{
 
 }
 msgLoop( true )
-setInterval( ()=>{
+// setInterval( ()=>{
+//     msgLoop( false )
+// } ,1000)
+const launchMsgLoop = ()=>{
     msgLoop( false )
-} ,1000)
+    setTimeout(launchMsgLoop , 1000)
+}
+launchMsgLoop()
 
 const updateForMsg = (ele) => {
     
@@ -235,16 +252,101 @@ const updateForMsg = (ele) => {
 
 }
 
-const avatarDivs = [
+let avatarDivs = [
     'avatar1',
     'avatar2',
     'avatar3',
     'avatar4'
 ]
+const arrayShuffle = (array) => {
+    // https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
+    let counter = array.length;
+
+    // While there are elements in the array
+    while (counter > 0) {
+        // Pick a random index
+        let index = Math.floor(Math.random() * counter);
+
+        // Decrease counter by 1
+        counter--;
+
+        // And swap the last element with it
+        let temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
+}
+avatarDivs = arrayShuffle( avatarDivs )
+
+const divToKey = {
+    "avatar1":null,
+    "avatar2":null,
+    "avatar3":null,
+    "avatar4":null
+}
+const divToAvatarInstance = {
+    "avatar1":null,
+    "avatar2":null,
+    "avatar3":null,
+    "avatar4":null
+}
+
 const updateForAvatar = (ele) => {
+
+    const key = `${ ele['sender'] }:${ ele['avatar'] }`
+
+    for(let i in avatarDivs){
+        
+        if( divToKey[ avatarDivs[i] ] == key ){
+
+            displayEmotion(
+                divToAvatarInstance[ avatarDivs[i] ],
+                ele['message'],
+                emotionToExpression[ ele['avatar'] ][ ele['emotion'] ],
+                emotionToMotion[ ele['avatar'] ][ ele['emotion'] ],
+            )
+
+            newAvatarDivs = [ avatarDivs[i] ].concat( avatarDivs.slice(0,i) ).concat( avatarDivs.slice(i+1) )
+            avatarDivs = newAvatarDivs
+
+            return 
+        }
+    }
+
+    i = avatarDivs.length -1
+    const divId = avatarDivs[i]
+    let preAvatar = divToAvatarInstance[ divId ]
     
+    if(!!preAvatar){
+        preAvatar.release()
+        preAvatar.hide()
+        const preContainerDiv = preAvatar.parentElement
+        preContainerDiv.removeChild(preAvatar)
+    }
 
+    const callbackFlag = String(Date.now() + Math.random())
+    const laterMsg          =  ele['message']
+    const laterExpression   =  emotionToExpression[ ele['avatar'] ][ ele['emotion'] ]
+    const laterMotion       =  emotionToMotion[ ele['avatar'] ][ ele['emotion'] ]
 
+    const callbackDisplay = (event) => {
+        if(event.data == callbackFlag){
+            displayEmotion(
+                divToAvatarInstance[divId],
+                laterMsg,
+                laterExpression,
+                laterMotion
+            )
+        }
+        window.removeEventListener('message', callbackDisplay)
+    }
+
+    window.addEventListener('message',callbackDisplay)
+    divToAvatarInstance[divId] = loadModelToChatRoom( ele['avatar'] , ele['sender'] , divId , callbackFlag )
+    divToKey[divId] = key
+    
 }
 
 

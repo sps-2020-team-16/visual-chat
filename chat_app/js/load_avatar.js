@@ -26,7 +26,19 @@ const avatarArgs = {
     }
 }
 
-const loadModel = ( modelName )=>{
+const loadModel = ( modelName , callbackFlag = null )=>{
+
+    const options = {
+            "avatar": modelName,           // the name of the avatar 2D model
+            "gearandback": "false",     // if true the switching gear the background will appear
+            "buttons": "false",         // skip the render of buttons
+
+            "matrixHeight": avatarArgs[modelName]['matrixHeight'],
+            "matrixY":      avatarArgs[modelName]['matrixY'],
+            }
+    if( !!callbackFlag ){
+        options["callbackMsg"] = callbackFlag
+    }
 
     let avatar = new AVATAR(
         'https://avatar-dot-rqian-sps-summer20.df.r.appspot.com/Samples/TypeScript/avatar/',        //  Remote Avatar
@@ -37,14 +49,7 @@ const loadModel = ( modelName )=>{
         height,        // height of the canvas
         0,          // offset in x direction
         0,          // offset in y direction
-        {
-            "avatar": modelName,           // the name of the avatar 2D model
-            "gearandback": "false",     // if true the switching gear the background will appear
-            "buttons": "false",         // skip the render of buttons
-
-            "matrixHeight": avatarArgs[modelName]['matrixHeight'],
-            "matrixY":      avatarArgs[modelName]['matrixY'] 
-        } 
+        options
     )
 
     avatar.getContainerDiv().style.left = '0px'
