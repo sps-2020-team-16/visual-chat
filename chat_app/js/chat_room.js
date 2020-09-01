@@ -245,7 +245,7 @@ const updateForMsg = (ele) => {
     // Add the newly-sent msg to chat box
     var msgObj = {
         "timestamp": Date.now(),
-		"user_name": current_user,
+		"user_name": ele['sender'],
 		"text": msg
     };
     addMsg(msgObj);
@@ -320,10 +320,10 @@ const updateForAvatar = (ele) => {
     let preAvatar = divToAvatarInstance[ divId ]
     
     if(!!preAvatar){
-        preAvatar.release()
+        preAvatar.release( true )
         preAvatar.hide()
-        const preContainerDiv = preAvatar.parentElement
-        preContainerDiv.removeChild(preAvatar)
+        const preContainerDiv = preAvatar.getContainerDiv().parentElement
+        preContainerDiv.removeChild(preAvatar.getContainerDiv())
     }
 
     const callbackFlag = String(Date.now() + Math.random())
@@ -346,9 +346,12 @@ const updateForAvatar = (ele) => {
     window.addEventListener('message',callbackDisplay)
     divToAvatarInstance[divId] = loadModelToChatRoom( ele['avatar'] , ele['sender'] , divId , callbackFlag )
     divToKey[divId] = key
+
+    newAvatarDivs = [ avatarDivs[i] ].concat( avatarDivs.slice(0,i) ).concat( avatarDivs.slice(i+1) )
+    avatarDivs = newAvatarDivs
     
 }
-
+window.updateForAvatar = updateForAvatar
 
 // Current user sends a message
 function sendMsg() {
