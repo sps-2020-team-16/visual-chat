@@ -199,45 +199,45 @@ function loadModelToChatRoom(modelName, userName, divId , callbackFlag = null) {
     return avatar
 }
 
-let lastTimeStamp = -1
-const msgLoop = ( ignoreAvatar )=>{
+// let lastTimeStamp = -1
+// const msgLoop = ( ignoreAvatar )=>{
     
-    fetch(
-        '/api/chat/pulllight',
-        {
-            method: 'POST',
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                room: "room-test"
-            })
-        }
-    ).then( res => res.json() ).then( ( rJson ) => {
+//     fetch(
+//         '/api/chat/pulllight',
+//         {
+//             method: 'POST',
+//             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+//             body: JSON.stringify({
+//                 room: "room-test"
+//             })
+//         }
+//     ).then( res => res.json() ).then( ( rJson ) => {
 
-        for(let i in rJson){
-            ele = rJson[i]
-            if(ele.time > lastTimeStamp){
+//         for(let i in rJson){
+//             ele = rJson[i]
+//             if(ele.time > lastTimeStamp){
 
-                // console.log(ele)
-                updateForMsg( ele )
-                if(!ignoreAvatar){
-                    updateForAvatar( ele )
-                }
+//                 // console.log(ele)
+//                 updateForMsg( ele )
+//                 if(!ignoreAvatar){
+//                     updateForAvatar( ele )
+//                 }
 
-                lastTimeStamp = ele.time
-            }
-        }
-    } )
+//                 lastTimeStamp = ele.time
+//             }
+//         }
+//     } )
 
-}
-msgLoop( true )
-// setInterval( ()=>{
+// }
+// msgLoop( true )
+// // setInterval( ()=>{
+// //     msgLoop( false )
+// // } ,1000)
+// const launchMsgLoop = ()=>{
 //     msgLoop( false )
-// } ,1000)
-const launchMsgLoop = ()=>{
-    msgLoop( false )
-    setTimeout(launchMsgLoop , 1000)
-}
-launchMsgLoop()
+//     setTimeout(launchMsgLoop , 1000)
+// }
+// launchMsgLoop()
 
 const updateForMsg = (ele) => {
     
@@ -460,3 +460,99 @@ function fetchToLogout(){
         } )
 
 }
+
+const updateCompare = ( u1 , u2 ) => {
+
+    if( u1['avatar'] != u2['avatar'] ){
+        return false
+    }
+
+    if( u1['emotion'] != u2['emotion'] ){
+        return false
+    }
+
+    if( u1['message'] != u2['message'] ){
+        return false
+    }
+
+    if( u1['room'] != u2['room'] ){
+        return false
+    }
+
+    if( u1['sender'] != u2['sender'] ){
+        return false
+    }
+
+    if( u1['time'] != u2['time'] ){
+        return false
+    }
+
+    return true
+}
+
+let preResJson = []
+const msgLoop = ()=>{
+
+    fetch(
+        '/api/chat/pulllight',
+        {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                room: "room-test"
+            })
+        }
+    ).then( res => res.json() ).then( 
+        ( rJson ) => {
+
+            let indx = preResJson.length -1
+            if( indx >= 0 ){
+
+                const preLast = preResJson[ indx ]
+
+                let i = 0
+                for(i=rJson.length-1;i>=0;i--){
+                    if( updateCompare( rJson[i] , preLast ) ){
+                        break
+                    }
+                }
+
+                for(let j = i+1; j<rJson.length; j++){
+                    updateForMsg( rJson[j] )
+                    updateForAvatar( rJson[j] )
+                }
+            
+            }
+            preResJson = rJson
+
+            setTimeout( msgLoop , 1000 )
+            
+            } 
+        )
+
+}
+
+fetch(
+    '/api/chat/pulllight',
+    {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            room: "room-test"
+        })
+    }
+).then( res => res.json() ).then(
+    ( rJson ) => {
+
+        // console.log(`init rJson:`)
+        // console.log(preResJson)
+
+        preResJson = rJson
+        for(let i in preResJson){
+            updateForMsg( preResJson[i] )
+        }
+
+        setTimeout( msgLoop , 1000 )
+
+    }
+)
