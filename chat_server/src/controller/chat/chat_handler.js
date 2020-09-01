@@ -73,17 +73,17 @@ exports.pull_update = pull_update;
 exports.send_message = send_message;
 
 // nodejs runs on a single-thread, no need to use mutex
-let updatesList = {}
+let updatesDict = {}
 const updatesLength = 10
 async function update_the_updates( room , data ){
-    updatesList[room] = updatesList[room] || []
+    updatesDict[room] = updatesDict[room] || []
     data.time = Common.time()
-    updatesList[room] = updatesList[room].concat( [data] )
-    if(updatesList.length > updatesLength){
-        updatesList = updatesList.slice(1)
+    updatesDict[room] = updatesDict[room].concat( [data] )
+    if(updatesDict[room].length > updatesLength){
+        updatesDict[room] = updatesDict[room].slice(1)
     }
 }
 async function pull_update_light(req, res){
-    res.send(JSON.stringify(updatesList[req.body.room] || []))
+    res.send(JSON.stringify(updatesDict[req.body.room] || []))
 }
 exports.pull_update_light = pull_update_light
