@@ -504,8 +504,16 @@ const msgLoop = ()=>{
         }
     ).then( res => res.json() ).then( 
         ( rJson ) => {
+            
+        // console.log(`init rJson:`)
+        // console.log(preResJson)
+
+        // console.log(`rJson:`)
+        // console.log(rJson)
+
 
             let indx = preResJson.length -1
+            let j = 0
             if( indx >= 0 ){
 
                 const preLast = preResJson[ indx ]
@@ -517,12 +525,15 @@ const msgLoop = ()=>{
                     }
                 }
 
-                for(let j = i+1; j<rJson.length; j++){
-                    updateForMsg( rJson[j] )
-                    updateForAvatar( rJson[j] )
-                }
+                j = i+1
             
             }
+
+            for( ; j<rJson.length; j++){
+                updateForMsg( rJson[j] )
+                updateForAvatar( rJson[j] )
+            }
+            
             preResJson = rJson
 
             setTimeout( msgLoop , 1000 )
