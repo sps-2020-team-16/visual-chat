@@ -1,0 +1,27 @@
+{
+  "name": "visual-chat",
+  "version": "1.0.0",
+  "description": "A chat room with animation figure based on sentimental analysis of chat text.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node chat_server/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sps-2020-team-16/visual-chat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sps-2020-team-16/visual-chat/issues"
+  },
+  "homepage": "https://github.com/sps-2020-team-16/visual-chat#readme",
+  "dependencies": {
+    "@google-cloud/datastore": "^6.1.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "node-fetch": "^2.6.0"
+  }
+}

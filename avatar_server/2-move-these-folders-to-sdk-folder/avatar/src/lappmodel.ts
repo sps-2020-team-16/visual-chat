@@ -338,6 +338,26 @@ export class LAppModel extends CubismUserModel {
       this._modelMatrix.setupFromLayout(layout);
       this._state = LoadStep.LoadMotion;
 
+      ///////////////////////////////////////////////////////////////////////////////////
+      /////   EXTRA CHANGES HERE
+      ///////////////////////////////////////////////////////////////////////////////////
+      /////   INITIALIZE_MODEL_MATRIX
+      ///////////////////////////////////////////////////////////////////////////////////
+
+      LAppDefine._global.AVATAR_MODEL_MATRIX = this._modelMatrix;
+      if(LAppDefine.modelMatrixX){
+        this._modelMatrix.setX( LAppDefine.modelMatrixX );
+      }
+      if(LAppDefine.modelMatrixY){
+        this._modelMatrix.setY( LAppDefine.modelMatrixY );
+      }
+      if(LAppDefine.modelMatrixWidth){
+        this._modelMatrix.setWidth( LAppDefine.modelMatrixWidth );
+      }
+      if(LAppDefine.modelMatrixHeight){
+        this._modelMatrix.setHeight( LAppDefine.modelMatrixHeight );
+      }
+
       // callback
       loadCubismMotion();
     };

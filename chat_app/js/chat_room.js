@@ -1,5 +1,7 @@
+const current_URL = new URL( window.document.location )
+
 // Hard-coded current user
-current_user = "David"
+current_user = current_URL.searchParams.get('user') || "David"
 
 // Mapping emotions to expressions
 const emotionToExpression = {
@@ -156,24 +158,35 @@ function loadPage() {
     userNameItem.appendChild(name);
     navbarUserName.appendChild(userNameItem);
 
-    for (var i = 0; i < data.length; i++) {
-        // Add to the chat box
-        addMsg(data[i]);
-    }
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // ////    mock chatting code
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // Load models
-    loadModelToChatRoom("Hiyori", "Cathy", "avatar1");
-    loadModelToChatRoom("Natori", "Ron", "avatar2");
-    loadModelToChatRoom("Haru", "Julia", "avatar3");
-    loadModelToChatRoom("Mark", "David", "avatar4");
+    // for (var i = 0; i < data.length; i++) {
+    //     // Add to the chat box
+    //     addMsg(data[i]);
+    // }
 
-    // Hard-coded for demo: display Cathy's unhappy emotion
-    displayEmotion(window.avatar1, null, emotionToExpression["Hiyori"]["Anger"], emotionToMotion["Hiyori"]["Anger"], 10000);
+    // // Load models
+    // loadModelToChatRoom("Hiyori", "Cathy", "avatar1");
+    // loadModelToChatRoom("Natori", "Ron", "avatar2");
+    // loadModelToChatRoom("Haru", "Julia", "avatar3");
+    // loadModelToChatRoom("Mark", "David", "avatar4");
+
+    // // Hard-coded for demo: display Cathy's unhappy emotion
+    // displayEmotion(window.avatar1, null, emotionToExpression["Hiyori"]["Anger"], emotionToMotion["Hiyori"]["Anger"], 10000);
+
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // ////    mock chatting code
+    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 }
 
 // Load avatar model and its user name to chat room
-function loadModelToChatRoom(modelName, userName, divId) {
-    var avatar = loadModel(modelName);
+function loadModelToChatRoom(modelName, userName, divId , callbackFlag = null) {
+    var avatar = loadModel( modelName , callbackFlag );
     avatar.moveTo(divId);
     window[divId] = avatar;
     
@@ -183,29 +196,200 @@ function loadModelToChatRoom(modelName, userName, divId) {
     nameItem.appendChild(name);
 
     document.getElementById(divId).appendChild(nameItem);
+    return avatar
 }
 
-// Current user sends a message
-function sendMsg() {
-    var msg = window.document.getElementById('msg').value;
-    window.document.getElementById('msg').value = "";
+// let lastTimeStamp = -1
+// const msgLoop = ( ignoreAvatar )=>{
     
-    // TODO: interact with backend server
+//     fetch(
+//         '/api/chat/pulllight',
+//         {
+//             method: 'POST',
+//             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+//             body: JSON.stringify({
+//                 room: "room-test"
+//             })
+//         }
+//     ).then( res => res.json() ).then( ( rJson ) => {
 
+//         for(let i in rJson){
+//             ele = rJson[i]
+//             if(ele.time > lastTimeStamp){
+
+//                 // console.log(ele)
+//                 updateForMsg( ele )
+//                 if(!ignoreAvatar){
+//                     updateForAvatar( ele )
+//                 }
+
+//                 lastTimeStamp = ele.time
+//             }
+//         }
+//     } )
+
+// }
+// msgLoop( true )
+// // setInterval( ()=>{
+// //     msgLoop( false )
+// // } ,1000)
+// const launchMsgLoop = ()=>{
+//     msgLoop( false )
+//     setTimeout(launchMsgLoop , 1000)
+// }
+// launchMsgLoop()
+
+const updateForMsg = (ele) => {
+    
+    const msg = ele['message'] || ''
     // Add the newly-sent msg to chat box
     var msgObj = {
         "timestamp": Date.now(),
-		"user_name": current_user,
+		"user_name": ele['sender'],
 		"text": msg
     };
     addMsg(msgObj);
 
-    var emotion = "Sadness"; // should be fetched from server response
+}
 
-    // Call displayEmotion to display emotions and words
-    // Need to modify window.avatarD according to current user
-    // Now current_user is always set to David, and David is avatarD(the fourth avatar)
-    displayEmotion(window.avatar4, msg, emotionToExpression["Mark"][emotion], emotionToMotion["Mark"][emotion]);
+let avatarDivs = [
+    'avatar1',
+    'avatar2',
+    'avatar3',
+    'avatar4'
+]
+const arrayShuffle = (array) => {
+    // https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
+    let counter = array.length;
+
+    // While there are elements in the array
+    while (counter > 0) {
+        // Pick a random index
+        let index = Math.floor(Math.random() * counter);
+
+        // Decrease counter by 1
+        counter--;
+
+        // And swap the last element with it
+        let temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
+}
+avatarDivs = arrayShuffle( avatarDivs )
+
+const divToKey = {
+    "avatar1":null,
+    "avatar2":null,
+    "avatar3":null,
+    "avatar4":null
+}
+const divToAvatarInstance = {
+    "avatar1":null,
+    "avatar2":null,
+    "avatar3":null,
+    "avatar4":null
+}
+
+const updateForAvatar = (ele) => {
+
+    const key = `${ ele['sender'] }:${ ele['avatar'] }`
+
+    for(let i in avatarDivs){
+        
+        if( divToKey[ avatarDivs[i] ] == key ){
+
+            displayEmotion(
+                divToAvatarInstance[ avatarDivs[i] ],
+                ele['message'],
+                emotionToExpression[ ele['avatar'] ][ ele['emotion'] ],
+                emotionToMotion[ ele['avatar'] ][ ele['emotion'] ],
+            )
+
+            newAvatarDivs = [ avatarDivs[i] ].concat( avatarDivs.slice(0,i) ).concat( avatarDivs.slice(i+1) )
+            avatarDivs = newAvatarDivs
+
+            return 
+        }
+    }
+
+    i = avatarDivs.length -1
+    const divId = avatarDivs[i]
+    let preAvatar = divToAvatarInstance[ divId ]
+    
+    if(!!preAvatar){
+        preAvatar.release( true )
+        preAvatar.hide()
+        const preContainerDiv = preAvatar.getContainerDiv().parentElement
+        preContainerDiv.removeChild(preAvatar.getContainerDiv())
+    }
+
+    const callbackFlag = String(Date.now() + Math.random())
+    const laterMsg          =  ele['message']
+    const laterExpression   =  emotionToExpression[ ele['avatar'] ][ ele['emotion'] ]
+    const laterMotion       =  emotionToMotion[ ele['avatar'] ][ ele['emotion'] ]
+
+    const callbackDisplay = (event) => {
+        if(event.data == callbackFlag){
+            displayEmotion(
+                divToAvatarInstance[divId],
+                laterMsg,
+                laterExpression,
+                laterMotion
+            )
+        }
+        window.removeEventListener('message', callbackDisplay)
+    }
+
+    window.addEventListener('message',callbackDisplay)
+    divToAvatarInstance[divId] = loadModelToChatRoom( ele['avatar'] , ele['sender'] , divId , callbackFlag )
+    divToKey[divId] = key
+
+    newAvatarDivs = [ avatarDivs[i] ].concat( avatarDivs.slice(0,i) ).concat( avatarDivs.slice(i+1) )
+    avatarDivs = newAvatarDivs
+    
+}
+window.updateForAvatar = updateForAvatar
+
+// Current user sends a message
+function sendMsg() {
+
+    var msg = window.document.getElementById('msg').value;
+    window.document.getElementById('msg').value = "";
+
+    fetch(
+        '/api/chat/send',
+        {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: msg,
+                room: "room-test"
+            })
+        }
+    )//.then(res => res.json()).then(rJson => console.log(rJson))
+
+    // var msg = window.document.getElementById('msg').value;
+    // window.document.getElementById('msg').value = "";
+    
+    // // TODO: interact with backend server
+
+    // // Add the newly-sent msg to chat box
+    // var msgObj = {
+    //     "timestamp": Date.now(),
+	// 	"user_name": current_user,
+	// 	"text": msg
+    // };
+    // addMsg(msgObj);
+
+    // var emotion = "Sadness"; // should be fetched from server response
+
+    // // Call displayEmotion to display emotions and words
+    // // Need to modify window.avatarD according to current user
+    // // Now current_user is always set to David, and David is avatarD(the fourth avatar)
+    // displayEmotion(window.avatar4, msg, emotionToExpression["Mark"][emotion], emotionToMotion["Mark"][emotion]);
     
 }
 
@@ -249,7 +433,7 @@ function addMsg(obj) {
     }
 
     // Set head portrait displayed in the chat box
-    logoItem.setAttribute("src", a2z[obj["user_name"][0]]);
+    logoItem.setAttribute("src", a2z[  (obj["user_name"][0]).toUpperCase()  ]);
 
     chatItem.appendChild(logoItem);
     chatItem.appendChild(msg);
@@ -257,3 +441,129 @@ function addMsg(obj) {
 
     chatMsgs.appendChild(chatItem);
 }
+
+function fetchToLogout(){
+    
+    fetch(
+        '/api/logout', 
+        { 
+            method: 'POST', 
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, 
+            body: JSON.stringify({}) 
+        }
+        ).then( res => res.json() ).then( ( rJson ) => {
+
+            if( rJson['status'] == 0 ){
+                window.location.href = "/index.html";
+            }
+
+        } )
+
+}
+
+const updateCompare = ( u1 , u2 ) => {
+
+    if( u1['avatar'] != u2['avatar'] ){
+        return false
+    }
+
+    if( u1['emotion'] != u2['emotion'] ){
+        return false
+    }
+
+    if( u1['message'] != u2['message'] ){
+        return false
+    }
+
+    if( u1['room'] != u2['room'] ){
+        return false
+    }
+
+    if( u1['sender'] != u2['sender'] ){
+        return false
+    }
+
+    if( u1['time'] != u2['time'] ){
+        return false
+    }
+
+    return true
+}
+
+let preResJson = []
+const msgLoop = ()=>{
+
+    fetch(
+        '/api/chat/pulllight',
+        {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                room: "room-test"
+            })
+        }
+    ).then( res => res.json() ).then( 
+        ( rJson ) => {
+            
+        // console.log(`init rJson:`)
+        // console.log(preResJson)
+
+        // console.log(`rJson:`)
+        // console.log(rJson)
+
+
+            let indx = preResJson.length -1
+            let j = 0
+            if( indx >= 0 ){
+
+                const preLast = preResJson[ indx ]
+
+                let i = 0
+                for(i=rJson.length-1;i>=0;i--){
+                    if( updateCompare( rJson[i] , preLast ) ){
+                        break
+                    }
+                }
+
+                j = i+1
+            
+            }
+
+            for( ; j<rJson.length; j++){
+                updateForMsg( rJson[j] )
+                updateForAvatar( rJson[j] )
+            }
+            
+            preResJson = rJson
+
+            setTimeout( msgLoop , 1000 )
+            
+            } 
+        )
+
+}
+
+fetch(
+    '/api/chat/pulllight',
+    {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            room: "room-test"
+        })
+    }
+).then( res => res.json() ).then(
+    ( rJson ) => {
+
+        // console.log(`init rJson:`)
+        // console.log(preResJson)
+
+        preResJson = rJson
+        for(let i in preResJson){
+            updateForMsg( preResJson[i] )
+        }
+
+        setTimeout( msgLoop , 1000 )
+
+    }
+)
